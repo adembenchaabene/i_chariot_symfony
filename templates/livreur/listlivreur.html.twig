@@ -1,0 +1,52 @@
+{% extends 'base2.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+
+            <div class="col order-last text-right">
+                <br>
+                <a class="btn btn-outline-info" href="{{ path('addLivreur') }}"><i class="fa-solid fa-circle-plus"></i>Ajouter livreur</a>
+            </div>
+            <div class="col">
+            </div>
+            <div class="col order-first">
+                <h1 class="h3 mb-2 text-gray-800">La liste des livreurs</h1>
+            </div>
+
+        </div>
+    </div>
+<br>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+    <table border="1"  class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <tr>
+            <td>Id</td>
+            <td>Nom de livreur</td>
+            <td>Numero telephone</td>
+            <td>Prenom de livreur</td>
+            <td>Email</td>
+            <td>Action</td>
+
+        </tr>
+        {% for l in livreurs %}
+            <tr>
+                <td>{{l.idlivreur}}</td>
+                <td>{{l.nomlivreur}}</td>
+                <td>{{l.numtel}}</td>
+                <td>{{l.prenom}}</td>
+                <td>{{l.email}}</td>
+                <td><a href="{{ path('deleteLivreur',{'id':l.idlivreur}) }}" class="btn btn-outline-danger"><i class="fa-solid fa-trash-can"></i>Supprimer</a>
+                    <a href="{{ path('updateLivreur',{'id':l.idlivreur}) }}" class="btn btn-outline-primary"><i class="fa-solid fa-pen"></i>Modifier</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

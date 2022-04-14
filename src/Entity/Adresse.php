@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Adresse
  *
  * @ORM\Table(name="adresse", indexes={@ORM\Index(name="fk_user_adresse", columns={"iduser"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\AdresseRepository")
  */
 class Adresse
 {
@@ -25,6 +26,11 @@ class Adresse
      * @var string
      *
      * @ORM\Column(name="ville", type="string", length=50, nullable=false)
+     * @Assert\NotBlank(message="la ville  doit etre non vide")
+     * @Assert\Regex(
+     *     pattern="/[a-zA-Z]/",
+     *     message="La ville doit etre une chaine de caractére"
+     * )
      */
     private $ville;
 
@@ -32,6 +38,11 @@ class Adresse
      * @var string
      *
      * @ORM\Column(name="rue", type="string", length=50, nullable=false)
+     * @Assert\NotBlank(message="rue  doit etre non vide")
+     * @Assert\Regex(
+     *     pattern="/[a-zA-Z]/",
+     *     message="rue doit etre une chaine de caractére"
+     * )
      */
     private $rue;
 
@@ -39,6 +50,11 @@ class Adresse
      * @var int
      *
      * @ORM\Column(name="numMaison", type="integer", nullable=false)
+     * @Assert\NotBlank(message="Le numero de maison doit etre non vide")
+     * @Assert\Regex(
+     *     pattern="/[0-9]$/",
+     *     message="Le numero de telephone doit etre valide"
+     * )
      */
     private $nummaison;
 
@@ -62,7 +78,7 @@ class Adresse
         return $this->ville;
     }
 
-    public function setVille(string $ville): self
+    public function setVille(?string $ville): self
     {
         $this->ville = $ville;
 
@@ -74,7 +90,7 @@ class Adresse
         return $this->rue;
     }
 
-    public function setRue(string $rue): self
+    public function setRue(?string $rue): self
     {
         $this->rue = $rue;
 
@@ -86,7 +102,7 @@ class Adresse
         return $this->nummaison;
     }
 
-    public function setNummaison(int $nummaison): self
+    public function setNummaison(?int $nummaison): self
     {
         $this->nummaison = $nummaison;
 

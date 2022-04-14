@@ -3,14 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Commentaire
  *
- * @ORM\Table(name="commentaire", indexes={@ORM\Index(name="id_article", columns={"id_article"}), @ORM\Index(name="auteur_c", columns={"auteur_c"})})
+ * @ORM\Table(name="commentaire", indexes={@ORM\Index(name="auteur_c", columns={"auteur_c"}), @ORM\Index(name="id_article", columns={"id_article"})})
  * @ORM\Entity
- *@ORM\Entity(repositoryClass="App\Repository\CommentaireRepository")
  */
 class Commentaire
 {
@@ -27,12 +25,6 @@ class Commentaire
      * @var string
      *
      * @ORM\Column(name="contenu_c", type="text", length=65535, nullable=false)
-     * @Assert\NotBlank(message="description  doit etre non vide")
-     * @Assert\Length(
-     *      min = 7,
-     *      max = 100,
-     *      minMessage = "doit etre >=7 ",
-     *      maxMessage = "doit etre <=100" )
      */
     private $contenuC;
 

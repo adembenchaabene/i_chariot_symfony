@@ -1,0 +1,43 @@
+{% extends 'base2.html.twig' %}
+
+{% block content %}
+    {% for l in livreurs %}
+        <div class="container align-items-center">
+            <div class="row align-items-center ">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-6 align-items-center ">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row  align-items-center">
+                                <div class="col mr-2 align-items-center">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Livreur N {{l.idlivreur}} </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        {{l.nomlivreur}}
+                                        <br>
+                                        {{l.numtel}}
+                                        <br>
+                                        {{l.prenom}}
+                                        <br>
+                                        {{l.email}}
+                                        <br>
+                                        <br>
+                                        <a href="{{ path('choisirlivreur',{'id':idlivraison,'idlivreur':l.idlivreur}) }}" type="SubmitType" class="btn btn-primary ">selectionner</a>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-person"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <br>
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

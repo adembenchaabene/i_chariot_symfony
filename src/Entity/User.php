@@ -121,5 +121,9 @@ class User
         return $this;
     }
 
+    public function toString()
+    {
+        return $this->iduser;
+    }
 
 }

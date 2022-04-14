@@ -16,19 +16,19 @@
     <meta name="generator" content="Themefisher Small Apps Template v1.0">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="frontoffice/images/logoo_50.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontoffice/images/logoo_50.png')}}" />
 
     <!-- PLUGINS CSS STYLE -->
     {% block css%}
-        <link rel="stylesheet" href="frontoffice/plugins/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="frontoffice/plugins/themify-icons/themify-icons.css">
-        <link rel="stylesheet" href="frontoffice/plugins/slick/slick.css">
-        <link rel="stylesheet" href="frontoffice/plugins/slick/slick-theme.css">
-        <link rel="stylesheet" href="frontoffice/plugins/fancybox/jquery.fancybox.min.css">
-        <link rel="stylesheet" href="frontoffice/plugins/aos/aos.css">
+        <link rel="stylesheet" href="{{asset('frontoffice/plugins/bootstrap/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('frontoffice/plugins/themify-icons/themify-icons.css')}}">
+        <link rel="stylesheet" href="{{asset('frontoffice/plugins/slick/slick.css')}}">
+        <link rel="stylesheet" href="{{asset('frontoffice/plugins/slick/slick-theme.css')}}">
+        <link rel="stylesheet" href="{{asset('frontoffice/plugins/fancybox/jquery.fancybox.min.css')}}">
+        <link rel="stylesheet" href="{{asset('frontoffice/plugins/aos/aos.css')}}">
 
         <!-- CUSTOM CSS -->
-        <link href="frontoffice/css/style.css" rel="stylesheet">
+        <link href="{{asset('frontoffice/css/style.css')}}" rel="stylesheet />
     {% endblock %}
 </head>
 
@@ -37,7 +37,7 @@
 {% block header%}
     <nav class="navbar main-nav navbar-expand-lg px-2 px-sm-0 py-2 py-lg-0">
         <div class="container">
-            <a class="navbar-brand" href="index.html"><img src="frontoffice/images/logoo_50.png" alt="logo"></a>
+            <a class="navbar-brand" href="index.html"><img src="{{asset('frontoffice/images/logoo_50.png')}}" alt="logo"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="ti-menu"></span>
@@ -94,10 +94,13 @@
                         </ul>
                     </li>
                     <li class="nav-item @@about">
-                        <a class="nav-link" href="about.html">Livraison</a>
+                        <a class="nav-link"  href="{{ path('livraisonsUsers') }}">Livraison</a>
                     </li>
                     <li class="nav-item @@about">
-                        <a class="nav-link" href="{{ path('articles') }}">Articles</a>
+                        <a class="nav-link" href="{{ path('adresses') }}">Adresse</a>
+                    </li>
+                    <li class="nav-item @@about">
+                        <a class="nav-link" href="about.html">Articles</a>
                     </li>
                     <li class="nav-item @@contact">
                         <a class="nav-link" href="contact.html">Salles</a>
@@ -113,11 +116,15 @@
 
 <section class="section gradient-banner">
 </section>
-<br>
-<br>
-<br>
-{% block content %}
-{% endblock %}
+    <br>
+    <br>
+    <br>
+
+    {% block content %}
+
+    {% endblock %}
+
+
 <!--====  End of Hero Section  ====-->
 
 <!--============================
@@ -131,7 +138,7 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-12 m-md-auto align-self-center">
                         <div class="block">
-                            <a href="index.html"><img src="frontoffice/images/logotr_50.png" alt="footer-logo"></a>
+                            <a href="index.html"><img src="{{asset('frontoffice/images/logotr_50.png')}}" alt="footer-logo"></a>
                             <!-- Social Site Icons -->
                             <ul class="social-icon list-inline">
                                 <li class="list-inline-item">
@@ -207,17 +214,17 @@
 {% endblock %}
 <!-- JAVASCRIPTS -->
 {% block javascripts %}
-    <script src="frontoffice/plugins/jquery/jquery.min.js"></script>
-    <script src="frontoffice/plugins/bootstrap/bootstrap.min.js"></script>
-    <script src="frontoffice/plugins/slick/slick.min.js"></script>
-    <script src="frontoffice/plugins/fancybox/jquery.fancybox.min.js"></script>
-    <script src="frontoffice/plugins/syotimer/jquery.syotimer.min.js"></script>
-    <script src="frontoffice/plugins/aos/aos.js"></script>
+    <script src="{{asset('frontoffice/plugins/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('frontoffice/plugins/bootstrap/bootstrap.min.js')}}"></script>
+    <script src="{{asset('frontoffice/plugins/slick/slick.min.js')}}"></script>
+    <script src="{{asset('frontoffice/plugins/fancybox/jquery.fancybox.min.js')}}"></script>
+    <script src="{{asset('frontoffice/plugins/syotimer/jquery.syotimer.min.js')}}"></script>
+    <script src="{{asset('frontoffice/plugins/aos/aos.js')}}"></script>
     <!-- google map -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgeuuDfRlweIs7D6uo4wdIHVvJ0LonQ6g"></script>
-    <script src="frontoffice/plugins/google-map/gmap.js"></script>
+    <script src="{{asset('frontoffice/plugins/google-map/gmap.js')}}"></script>
 
-    <script src="frontoffice/js/script.js"></script>
+    <script src="{{asset('frontoffice/js/script.js')}}"></script>
 {% endblock %}
 </body>
 
