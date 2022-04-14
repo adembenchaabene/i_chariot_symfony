@@ -1,0 +1,27 @@
+{% extends 'base3.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col-12 col-lg-10 m-auto">
+            <div class="block">
+                <div class="title text-center">
+                    <h2>Categories</h2>
+                </div>
+                {% for c in categories %}
+                    <div class="job">
+                        <div class="row">
+                            <div class="content col-lg-6">
+                                <h3>{{c.nomcateg}}</h3>
+                                <p>{{c.description}}</p>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="apply-button text-right">
+                                    <a href="{{ path('Produits',{'id':c.idcateg}) }}" class="btn btn-main-sm">Voir les produits</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

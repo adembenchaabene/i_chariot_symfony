@@ -97,7 +97,7 @@
                         <a class="nav-link" href="about.html">Livraison</a>
                     </li>
                     <li class="nav-item @@about">
-                        <a class="nav-link" href="{{ path('articles') }}">Articles</a>
+                        <a class="nav-link" href="about.html">Articles</a>
                     </li>
                     <li class="nav-item @@contact">
                         <a class="nav-link" href="contact.html">Salles</a>
@@ -112,12 +112,11 @@
 =====================================-->
 
 <section class="section gradient-banner">
+    {% block body %}
+
+    {% endblock %}
 </section>
-<br>
-<br>
-<br>
-{% block content %}
-{% endblock %}
+
 <!--====  End of Hero Section  ====-->
 
 <!--============================

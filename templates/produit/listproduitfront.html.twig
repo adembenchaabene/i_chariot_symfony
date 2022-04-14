@@ -1,0 +1,40 @@
+{% extends 'base3.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-10 m-auto">
+            <article class="single-post">
+                <div class="post-title text-center">
+                    <h1>{{categorie.nomcateg}}</h1>
+                </div>
+                <div class="post-body">
+                    <p>{{categorie.description}}</p>
+                </div>
+            </article>
+        </div>
+        {% for p in produits %}
+            <div class="col-lg-4 col-md-6">
+                <article class="post-sm">
+                    <div class="post-thumb">
+                        <a href="#" ><img class="w-100" src="{{ asset('uploads/produits/' ~ p.image ) }}" alt="Post-Image"></a>
+                    </div>
+                    <div class="post-title">
+                        <h3><a href="#" >{{p.nomproduit}}</a></h3>
+                    </div>
+                    <div class="post-meta">
+                        <ul class="list-inline post-tag">
+                            <li class="list-inline-item">
+                                <strong>Quantité:</strong>{{p.quantite}}
+                            </li>
+                            <li class="list-inline-item">
+                                <strong>Prix:</strong>{{p.prix}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="post-details">
+                        <p>{{p.description}}</p>
+                    </div>
+                </article>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
