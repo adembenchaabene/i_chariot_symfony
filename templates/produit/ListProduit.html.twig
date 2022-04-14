@@ -1,0 +1,35 @@
+{% extends 'base2.html.twig' %}
+
+{% block content %}
+
+    <table border="1">
+        <tr>
+            <td>Id</td>
+            <td>Nom Produit</td>
+            <td>Quantite</td>
+            <td>Prix</td>
+            <td>Description</td>
+            <td>Image</td>
+            <td>Action</td>
+
+
+        </tr>
+        {% for p in produits %}
+            <tr>
+                <td>{{p.idproduit}}</td>
+                <td>{{p.nomproduit}}</td>
+                <td>{{p.quantite}}</td>
+                <td>{{p.prix}}</td>
+                <td>{{p.description}}</td>
+                <td>{{p.image}}</td>
+               {# <td>{{p.Categorie.idCateg}}</td> #}
+
+
+                <td><a href="{{ path('deleteProduit',{'id':p.idproduit}) }}">Supprimer</a> 
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+     <a class="btn btn-success" href="{{ path('addProduit') }}">Ajouter produit</a>
+      
+{% endblock %}

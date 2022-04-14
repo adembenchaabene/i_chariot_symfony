@@ -33,9 +33,9 @@ class Reacts
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="datecrea", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="datecrea", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $datecrea = 'current_timestamp()';
+    private $datecrea = 'CURRENT_TIMESTAMP';
 
     public function getIdarticles(): ?int
     {

@@ -3,11 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use App\Entity\Commentaire;
 use App\Form\ArticleType;
-use App\Form\CommentaireType;
 use App\Repository\ArticleRepository;
-use App\Repository\CommentaireRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -105,49 +102,6 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute("getarticles");
         }
         return $this->render("article/updateArticle.html.twig",array("article"=>$article,"articleformi"=>$form->createView()));
-    }
-
-    /**
-     * @Route("/admin/article/{id}", name="articledetailadmin")
-     */
-    public function ArticleAdmin(ArticleRepository $articleRepository,CommentaireRepository $commentaireRepository,$id){
-        $article= $articleRepository->find($id);
-        $commentaires=$commentaireRepository->findByArticle($article);
-        return $this->render("article/articleAdmin.html.twig",
-            array('article'=>$article,'commentaires'=>$commentaires));
-    }
-
-    /**
-     * @Route("/article/{id}", name="articledetail")
-     */
-    public function Article(ArticleRepository $articleRepository,CommentaireRepository $commentaireRepository,$id,Request $request){
-        $article= $articleRepository->find($id);
-        $commentaires=$commentaireRepository->findByArticle($article);
-
-        $commentaire=new Commentaire();
-        $form= $this->createForm(CommentaireType::class,$commentaire);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-            $commentaire->setIdArticle($article);
-            $commentaire->setAuteurC($article->getAuteur());
-            $commentaire->setDatepub(new \DateTime());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($commentaire);
-            $em->flush();
-            return $this->redirectToRoute("articledetail",array('id'=>$id));
-        }
-        return $this->render("article/article.html.twig",
-            array('article'=>$article,'commentaires'=>$commentaires,'form'=>$form->createView()));
-    }
-
-    /**
-     * @Route("/articles", name="articles")
-     */
-    public function Articles(ArticleRepository $repository){
-        $articles= $repository->findByExampleField("desarchive");
-        return $this->render("article/affichearticlesfront.html.twig",
-            array('articles'=>$articles));
     }
 
 }

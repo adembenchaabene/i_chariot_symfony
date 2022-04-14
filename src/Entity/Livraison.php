@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Livraison
  *
- * @ORM\Table(name="livraison", indexes={@ORM\Index(name="id_produit", columns={"id_produit"}), @ORM\Index(name="id_livreur", columns={"id_livreur"}), @ORM\Index(name="fk_livraison_user", columns={"iduser"}), @ORM\Index(name="adresse", columns={"adresse"})})
+ * @ORM\Table(name="livraison", indexes={@ORM\Index(name="id_livreur", columns={"id_livreur"}), @ORM\Index(name="fk_livraison_user", columns={"iduser"}), @ORM\Index(name="adresse", columns={"adresse"}), @ORM\Index(name="id_produit", columns={"id_produit"})})
  * @ORM\Entity
  */
 class Livraison
@@ -34,6 +34,16 @@ class Livraison
      * @ORM\Column(name="type", type="string", length=250, nullable=false)
      */
     private $type;
+
+    /**
+     * @var \Produit
+     *
+     * @ORM\ManyToOne(targetEntity="Produit")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_produit", referencedColumnName="idProduit")
+     * })
+     */
+    private $idProduit;
 
     /**
      * @var \Adresse
@@ -65,16 +75,6 @@ class Livraison
      */
     private $iduser;
 
-    /**
-     * @var \Produit
-     *
-     * @ORM\ManyToOne(targetEntity="Produit")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_produit", referencedColumnName="idProduit")
-     * })
-     */
-    private $idProduit;
-
     public function getIdlivraison(): ?int
     {
         return $this->idlivraison;
@@ -100,6 +100,18 @@ class Livraison
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getIdProduit(): ?Produit
+    {
+        return $this->idProduit;
+    }
+
+    public function setIdProduit(?Produit $idProduit): self
+    {
+        $this->idProduit = $idProduit;
 
         return $this;
     }
@@ -136,18 +148,6 @@ class Livraison
     public function setIduser(?User $iduser): self
     {
         $this->iduser = $iduser;
-
-        return $this;
-    }
-
-    public function getIdProduit(): ?Produit
-    {
-        return $this->idProduit;
-    }
-
-    public function setIdProduit(?Produit $idProduit): self
-    {
-        $this->idProduit = $idProduit;
 
         return $this;
     }

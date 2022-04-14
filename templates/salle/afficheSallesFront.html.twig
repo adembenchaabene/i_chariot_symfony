@@ -1,0 +1,33 @@
+{% extends 'base3.html.twig' %}
+{% block content %}
+    <div class="row">
+        {% for s in salles %}
+            <div class="col-lg-4 col-md-6">
+                <article class="post-sm">
+                    <div class="post-thumb">
+                        <a href="{{ path('SalledetailFront',{'id':s.idSalle}) }}" ><img class="w-100" src="{{ asset('uploads/salles/' ~ s.image ) }}" alt="Post-Image"></a>
+                    </div>
+                    <div class="post-title">
+                        <h3><a href="{{ path('SalledetailFront',{'id':s.idSalle}) }}" >{{s.nom}}</a></h3>
+                    </div>
+                    <div class="post-meta">
+                        <ul class="list-inline post-tag">
+                            <li class="list-inline-item">
+                                <img src="{{ asset('uploads/salles/' ~ s.image ) }}" alt="author-thumb">
+                            </li>
+                            <li class="list-inline-item">
+                                <strong>Prix:</strong>{{s.prixSalle}}
+                            </li>
+                            <li class="list-inline-item">
+                                <strong>Capacité:</strong>{{s.capacite}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="post-details">
+                        <p></p>
+                    </div>
+                </article>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
