@@ -27,26 +27,42 @@
                 </div>
             </article>
             <div class="about-author">
-                <h2>Comments</h2>
-
-                {% for c in commentaires %}
-                <div class="media">
-                    <div class="image">
-                        <img class="d-flex justify-content-center align-self-center" src="images/team/marketing-team-03.jpg" alt="author-image">
-                    </div>
-                    <div class="media-body align-self-center">
-                        <h3>{{ c.auteurC.nom }}</h3>
-                        <h6>{{ c.datepub|date }}</h6>
-                        <p>{{ c.contenuC }}</p>
-                        <ul class="list-inline social-links">
-                            <li class="list-inline-item"><a href="#"><i class="ti-heart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="col-8 text-right">
-                        <a href="{{ path('deleteComment',{'id':c.idcommentaire}) }}" class="text-danger"><i class="ti-trash"></i></a>
+                <div class="col-lg-8">
+                    <h2>Comments</h2>
+                    <div class="col-lg-12 row">
+                        <div class="col-lg-4">
+                            Trier par:
+                        </div>
+                        <div class="col-lg-4">
+                            <button class="btn btn-info" id="recentes">Les plus récentes</button>
+                        </div>
+                        <div class="col-lg-4">
+                            <button class="btn btn-secondary" id="anciens">les plus anciens</button>
+                        </div>
                     </div>
                 </div>
-                {% endfor %}
+                <br>
+                <div id="result">
+                    {% for c in commentaires %}
+                        <div class="media">
+                            <div class="image">
+                                <img class="d-flex justify-content-center align-self-center" src="images/team/marketing-team-03.jpg" alt="author-image">
+                            </div>
+                            <div class="media-body align-self-center">
+                                <h3>{{ c.auteurC.nom }}</h3>
+                                <h6>{{ c.datepub|date }}</h6>
+                                <p>{{ c.contenuC }}</p>
+                                <ul class="list-inline social-links">
+                                    <li class="list-inline-item"><a href="javascript:void(0)"><i class="ti-heart"></i> 2</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-8 text-right">
+                                <a href="{{ path('updateComment',{'id':c.idcommentaire}) }}" class="text-dark"><i class="ti-reload"></i></a>
+                                <a href="{{ path('deleteComment',{'id':c.idcommentaire}) }}" class="text-danger"><i class="ti-trash"></i></a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
 
                 {{ form_start(form,{attr:{novalidate:'novalidate'}})}}
                     <div class="form-group">
@@ -61,4 +77,104 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            var searchRequest = null;
+            $("#recentes").click(function() {
+                var that = this;
+                var val = {{ article.idArticle }};
+                var entitySelector = $("#result").html('');
+                if (searchRequest != null)
+                    searchRequest.abort();
+                searchRequest = $.ajax({
+                    type: "POST",
+                    url: "/triComments",
+                    dataType: "text",
+                    data:{
+                        'type':1,
+                        'idarticle':val
+                    },
+                    success: function(msg){
+                        var result = JSON.parse(msg);
+                        if(result.length!==0){
+                            for(let i = 0; i < result.length; i++){
+                                console.log(result[i]);
+                                entitySelector.append(
+                                    '<div class="media">'+
+                                    '<div class="image">'+
+                                    '<img class="d-flex justify-content-center align-self-center" src="images/team/marketing-team-03.jpg" alt="author-image">'+
+                                    '</div>'+
+                                    '<div class="media-body align-self-center">'+
+                                    '<h3>'+result[i].auteurC.nom+'</h3>'+
+                                    '<h6>'+result[i].datepub+'</h6>'+
+                                    '<p>'+result[i].contenuC+'</p>'+
+                                    '<ul class="list-inline social-links">'+
+                                    '<li class="list-inline-item"><a href="javascript:void(0)"><i class="ti-heart"></i> 2</a></li>'+
+                                    '</ul>'+
+                                    '</div>'+
+                                    '<div class="col-8 text-right">'+
+                                    '<a href="/updateComment/'+result[i].idcommentaire+'" class="text-dark"><i class="ti-reload"></i></a>'+
+                                    '<a href="/deleteComment/'+result[i].idcommentaire+'" class="text-danger"><i class="ti-trash"></i></a>'+
+                                    '</div>'+
+                                    '</div>'
+                                );
+                            }
+                        }
+                        else{
+                            entitySelector.append('<div class="error">'+value+'</div>');
+                        }
+                    }
+                });
+            });
+
+            $("#anciens").click(function() {
+                var that = this;
+                var val = {{ article.idArticle }};
+                var entitySelector = $("#result").html('');
+                if (searchRequest != null)
+                    searchRequest.abort();
+                searchRequest = $.ajax({
+                    type: "POST",
+                    url: "/triComments",
+                    dataType: "text",
+                    data:{
+                        'type':2,
+                        'idarticle':val
+                    },
+                    success: function(msg){
+                        var result = JSON.parse(msg);
+                        if(result.length!==0){
+                            for(let i = 0; i < result.length; i++){
+                                console.log(result[i]);
+                                entitySelector.append(
+                                    '<div class="media">'+
+                                    '<div class="image">'+
+                                    '<img class="d-flex justify-content-center align-self-center" src="images/team/marketing-team-03.jpg" alt="author-image">'+
+                                    '</div>'+
+                                    '<div class="media-body align-self-center">'+
+                                    '<h3>'+result[i].auteurC.nom+'</h3>'+
+                                    '<h6>'+result[i].datepub+'</h6>'+
+                                    '<p>'+result[i].contenuC+'</p>'+
+                                    '<ul class="list-inline social-links">'+
+                                    '<li class="list-inline-item"><a href="javascript:void(0)"><i class="ti-heart"></i> 2</a></li>'+
+                                    '</ul>'+
+                                    '</div>'+
+                                    '<div class="col-8 text-right">'+
+                                    '<a href="/updateComment/'+result[i].idcommentaire+'" class="text-dark"><i class="ti-reload"></i></a>'+
+                                    '<a href="/deleteComment/'+result[i].idcommentaire+'" class="text-danger"><i class="ti-trash"></i></a>'+
+                                    '</div>'+
+                                    '</div>'
+                                );
+                            }
+                        }
+                        else{
+                            entitySelector.append('<div class="error">'+value+'</div>');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

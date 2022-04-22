@@ -60,6 +60,36 @@ class CommentaireRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return Commentaire[] Returns an array of Commentaire objects
+     */
+
+    public function triAnciensArticle($article)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.idArticle = :val')
+            ->setParameter('val', $article)
+            ->orderBy('c.datepub', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @return Commentaire[] Returns an array of Commentaire objects
+     */
+
+    public function triRecentesArticle($article)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.idArticle = :val')
+            ->setParameter('val', $article)
+            ->orderBy('c.datepub', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 
     /*
     public function findOneBySomeField($value): ?Commentaire

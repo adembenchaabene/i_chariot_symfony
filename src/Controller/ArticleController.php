@@ -150,5 +150,26 @@ class ArticleController extends AbstractController
             array('articles'=>$articles));
     }
 
+    /**
+     * @Route("/searchArticle", name="searcharticles")
+     */
+    public function searchArticle(ArticleRepository $repository,Request $request){
+        $articles= $repository->search($request->get('val'));
+        if(!$articles) {
+            $result['articles']['error'] = "Aucun Article trouvé";
+        } else {
+            $result['articles'] = $this->getRealEntities($articles);
+        }
+
+        return new Response(json_encode($result));
+    }
+
+    public function getRealEntities($articles)
+    {
+        foreach ($articles as $article) {
+            $realEntities[$article->getIdarticle()] = [$article->getTitre(),$article->getContenu(),$article->getEtat(),$article->getImage(),$article->getAuteur()->getNom()];
+        }
+        return $realEntities;
+    }
 }
 
