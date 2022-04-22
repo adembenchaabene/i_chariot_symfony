@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -60,6 +61,29 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
+    }
+    /**
+     *@return User[]
+     */
+    public function findSearch(SearchData $search ) : array
+    {
+        $query = $this->createQueryBuilder('u')->select('u');
+
+
+
+        if ($search->q || $search->p ) {
+            $query =
+                $query
+                    ->where('u.nom LIKE :q')
+                    ->setParameter('q','%' .$search->q .'%')
+                    ->andWhere('u.prenom LIKE :p')
+                    ->setParameter('p','%' .$search->p .'%');
+        }
+
+
+
+
+        return $query->getQuery()->getResult();
     }
 
     // /**
