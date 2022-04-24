@@ -27,6 +27,13 @@ class SearchformType extends AbstractType
                     'placeholder' => 'prenom'
                 ]
             ])
+            ->add('s', TextType::class, [
+                'label' => false,
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'roles'
+                ]
+            ])
         ;
     }
 

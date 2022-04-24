@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Twilio\Rest\Client;
 
 /**
  * @Route("/user")
@@ -37,6 +38,24 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/tri/user", name="app_user_tri", methods={"GET"})
+     */
+    public function tri(UserRepository $userRepository,Request $request): Response
+    {
+
+        $data = new SearchData();
+        $form = $this->createForm(SearchformType::class, $data);
+        $form->handleRequest($request);
+
+        $users= $userRepository->tri($data);
+
+
+        return $this->render('user/tri.html.twig', [
+            'users' => $users,
+            'form' => $form->createView(),
+        ]);
+    }
 
 
 
@@ -50,6 +69,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $user->setPassword(
                 $userPasswordEncoder->encodePassword(
                         $user,

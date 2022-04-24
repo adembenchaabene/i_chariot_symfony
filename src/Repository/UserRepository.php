@@ -66,8 +66,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      *@return User[]
      */
     public function findSearch(SearchData $search ) : array
-    {
-        $query = $this->createQueryBuilder('u')->select('u');
+    {//trii
+        $query =$this->createQueryBuilder('u');
+
+
 
 
 
@@ -77,7 +79,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                     ->where('u.nom LIKE :q')
                     ->setParameter('q','%' .$search->q .'%')
                     ->andWhere('u.prenom LIKE :p')
-                    ->setParameter('p','%' .$search->p .'%');
+                    ->setParameter('p','%' .$search->p .'%')
+                    ->andWhere('u.role LIKE :s')
+                    ->setParameter('s','%' .$search->s .'%');
+
         }
 
 
@@ -85,6 +90,36 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return $query->getQuery()->getResult();
     }
+
+    /**
+     *@return User[]
+     */
+    public function tri(SearchData $search ) : array
+    {//trii
+        $query =$this->createQueryBuilder('u')
+            ->orderBy('u.id','DESC');
+
+
+
+
+        if ($search->q || $search->p ) {
+            $query =
+                $query
+                    ->where('u.nom LIKE :q')
+                    ->setParameter('q','%' .$search->q .'%')
+                    ->andWhere('u.prenom LIKE :p')
+                    ->setParameter('p','%' .$search->p .'%')
+                    ->andWhere('u.role LIKE :s')
+                    ->setParameter('s','%' .$search->s .'%');
+
+        }
+
+
+
+
+        return $query->getQuery()->getResult();
+    }
+
 
     // /**
     //  * @return User[] Returns an array of User objects

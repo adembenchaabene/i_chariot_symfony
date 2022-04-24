@@ -50,11 +50,17 @@ class User implements UserInterface
      */
     private $nom;
 
+
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="il faut saisir votre prenom")
      */
     private $prenom;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isExpired = false;
+
     /**
      * @CaptchaAssert\ValidCaptcha(
      *      message = "CAPTCHA validation failed, try again."
@@ -62,6 +68,16 @@ class User implements UserInterface
      */
     protected $captchaCode;
 
+    public function isExpired(): bool
+    {
+        return $this->isExpired;
+    }
+
+    public function setIsExpired(bool $isExpired): self
+    {
+        $this->isExpired = $isExpired;
+        return $this;
+    }
     public function getCaptchaCode()
     {
         return $this->captchaCode;

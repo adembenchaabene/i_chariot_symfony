@@ -98,8 +98,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
        // dd($user->getRoles());
-        if($user->getRoles() == array("ROLE_USER"))
+        if($user->getRoles() == array("ROLE_USER")) {
+            if($user->isExpired() == false)
             return new RedirectResponse($this->urlGenerator->generate('app_home'));
+            echo "<script>alert(\"your account is expired\")</script>";
+        }
         else
             return new RedirectResponse($this->urlGenerator->generate('app_home2'));
 

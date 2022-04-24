@@ -15,6 +15,10 @@ class SearchData
      * @var string
      */
     public $p;
+    /**
+     * @var string
+     */
+    public $s;
 
 
 

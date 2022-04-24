@@ -6,6 +6,7 @@
 {% block body %}
     <h1>liste d'utulisateur</h1>
     {% include 'user/_filtre.html.twig' with {form : form} only %}
+    <a href="{{ path('app_user_tri') }}">trier la liste </a>
 
     <table class="table">
         <thead>
