@@ -328,7 +328,10 @@ class __TwigTemplate_a7a51165f69e62799b32aa98e79186ddb60112e1116528ecbbc10875982
                             >
 
                             <div class=\"row px-3 mb-4\">
-                            <div class=\"custom-control custom-checkbox custom-control-inline\"> <input id=\"chk1\" type=\"checkbox\" name=\"chk\" class=\"custom-control-input\"> <label for=\"chk1\" class=\"custom-control-label text-sm\">Remember me</label> </div> <a href=\"#\" class=\"ml-auto mb-0 text-sm\">Forgot Password?</a>
+                            <div class=\"custom-control custom-checkbox custom-control-inline\"> <input id=\"chk1\" type=\"checkbox\" name=\"chk\" class=\"custom-control-input\"> <label for=\"chk1\" class=\"custom-control-label text-sm\">Remember me</label> </div> <a href=\"";
+        // line 227
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("forgetPassword");
+        echo "\" class=\"ml-auto mb-0 text-sm\">Forgot Password?</a>
                         </div>
 
 
@@ -371,7 +374,7 @@ class __TwigTemplate_a7a51165f69e62799b32aa98e79186ddb60112e1116528ecbbc10875982
 
     public function getDebugInfo()
     {
-        return array (  341 => 235,  326 => 223,  318 => 218,  314 => 216,  306 => 213,  303 => 212,  300 => 211,  294 => 209,  292 => 208,  88 => 6,  78 => 5,  59 => 3,  36 => 1,);
+        return array (  344 => 235,  333 => 227,  326 => 223,  318 => 218,  314 => 216,  306 => 213,  303 => 212,  300 => 211,  294 => 209,  292 => 208,  88 => 6,  78 => 5,  59 => 3,  36 => 1,);
     }
 
     public function getSourceContext()
@@ -602,7 +605,7 @@ class __TwigTemplate_a7a51165f69e62799b32aa98e79186ddb60112e1116528ecbbc10875982
                             >
 
                             <div class=\"row px-3 mb-4\">
-                            <div class=\"custom-control custom-checkbox custom-control-inline\"> <input id=\"chk1\" type=\"checkbox\" name=\"chk\" class=\"custom-control-input\"> <label for=\"chk1\" class=\"custom-control-label text-sm\">Remember me</label> </div> <a href=\"#\" class=\"ml-auto mb-0 text-sm\">Forgot Password?</a>
+                            <div class=\"custom-control custom-checkbox custom-control-inline\"> <input id=\"chk1\" type=\"checkbox\" name=\"chk\" class=\"custom-control-input\"> <label for=\"chk1\" class=\"custom-control-label text-sm\">Remember me</label> </div> <a href=\"{{ path(\"forgetPassword\") }}\" class=\"ml-auto mb-0 text-sm\">Forgot Password?</a>
                         </div>
 
 
@@ -621,6 +624,6 @@ class __TwigTemplate_a7a51165f69e62799b32aa98e79186ddb60112e1116528ecbbc10875982
             </div>
         </div>
     </div>
-{% endblock %}", "security/login2.html.twig", "C:\\Users\\MSI\\Desktop\\i-chariot-main\\i-chariot-main\\templates\\security\\login2.html.twig");
+{% endblock %}", "security/login2.html.twig", "C:\\Users\\MSI\\Desktop\\i-chariot-main triavanceee\\i-chariot-main\\i-chariot-main\\templates\\security\\login2.html.twig");
     }
 }

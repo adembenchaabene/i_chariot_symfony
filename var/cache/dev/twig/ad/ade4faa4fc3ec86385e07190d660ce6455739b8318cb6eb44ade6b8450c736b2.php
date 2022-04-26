@@ -92,7 +92,10 @@ class __TwigTemplate_aae26b3c14686e67bf2b9585ea26ec4d5b00834850ca22accfb2b6f493d
                 <div class=\"modal-body\">Select \"Logout\" below if you are ready to end your current session.</div>
                 <div class=\"modal-footer\">
                     <button class=\"btn btn-secondary\" type=\"button\" data-dismiss=\"modal\">Cancel</button>
-                    <a class=\"btn btn-primary\" href=\"login.html\">Logout</a>
+                    <a class=\"btn btn-primary\" href=\"";
+        // line 444
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_logout");
+        echo "\">Logout</a>
                 </div>
             </div>
         </div>
@@ -538,7 +541,10 @@ class __TwigTemplate_aae26b3c14686e67bf2b9585ea26ec4d5b00834850ca22accfb2b6f493d
                                 Activity Log
                             </a>
                             <div class=\"dropdown-divider\"></div>
-                            <a class=\"dropdown-item\" href=\"#\" data-toggle=\"modal\" data-target=\"#logoutModal\">
+                            <a class=\"dropdown-item\" href=\"";
+        // line 394
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_logout");
+        echo "\" data-toggle=\"modal\" data-target=\"#logoutModal\">
                                 <i class=\"fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400\"></i>
                                 Logout
                             </a>
@@ -748,9 +754,14 @@ class __TwigTemplate_aae26b3c14686e67bf2b9585ea26ec4d5b00834850ca22accfb2b6f493d
         return "base2.html.twig";
     }
 
+    public function isTraitable()
+    {
+        return false;
+    }
+
     public function getDebugInfo()
     {
-        return array (  735 => 469,  725 => 468,  714 => 465,  704 => 464,  693 => 461,  683 => 460,  672 => 457,  662 => 456,  650 => 452,  640 => 451,  623 => 409,  613 => 408,  595 => 406,  583 => 25,  574 => 19,  571 => 18,  561 => 17,  213 => 67,  184 => 41,  168 => 27,  166 => 17,  160 => 14,  148 => 4,  138 => 3,  126 => 472,  124 => 468,  121 => 467,  119 => 464,  116 => 463,  114 => 460,  111 => 459,  109 => 456,  106 => 455,  104 => 451,  68 => 417,  66 => 408,  63 => 407,  61 => 406,  58 => 405,  56 => 3,  52 => 1,);
+        return array (  741 => 469,  731 => 468,  720 => 465,  710 => 464,  699 => 461,  689 => 460,  678 => 457,  668 => 456,  656 => 452,  646 => 451,  629 => 409,  619 => 408,  601 => 406,  589 => 25,  580 => 19,  577 => 18,  567 => 17,  546 => 394,  216 => 67,  187 => 41,  171 => 27,  169 => 17,  163 => 14,  151 => 4,  141 => 3,  129 => 472,  127 => 468,  124 => 467,  122 => 464,  119 => 463,  117 => 460,  114 => 459,  112 => 456,  109 => 455,  107 => 451,  97 => 444,  68 => 417,  66 => 408,  63 => 407,  61 => 406,  58 => 405,  56 => 3,  52 => 1,);
     }
 
     public function getSourceContext()
@@ -1148,7 +1159,7 @@ class __TwigTemplate_aae26b3c14686e67bf2b9585ea26ec4d5b00834850ca22accfb2b6f493d
                                 Activity Log
                             </a>
                             <div class=\"dropdown-divider\"></div>
-                            <a class=\"dropdown-item\" href=\"#\" data-toggle=\"modal\" data-target=\"#logoutModal\">
+                            <a class=\"dropdown-item\" href=\"{{ path('app_logout') }}\" data-toggle=\"modal\" data-target=\"#logoutModal\">
                                 <i class=\"fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400\"></i>
                                 Logout
                             </a>
@@ -1198,7 +1209,7 @@ class __TwigTemplate_aae26b3c14686e67bf2b9585ea26ec4d5b00834850ca22accfb2b6f493d
                 <div class=\"modal-body\">Select \"Logout\" below if you are ready to end your current session.</div>
                 <div class=\"modal-footer\">
                     <button class=\"btn btn-secondary\" type=\"button\" data-dismiss=\"modal\">Cancel</button>
-                    <a class=\"btn btn-primary\" href=\"login.html\">Logout</a>
+                    <a class=\"btn btn-primary\" href=\"{{ path('app_logout') }}\">Logout</a>
                 </div>
             </div>
         </div>
@@ -1228,6 +1239,6 @@ class __TwigTemplate_aae26b3c14686e67bf2b9585ea26ec4d5b00834850ca22accfb2b6f493d
     {% endblock  %}
 </div>
 
-</html>", "base2.html.twig", "C:\\Users\\MSI\\Desktop\\i-chariot-main\\i-chariot-main\\templates\\base2.html.twig");
+</html>", "base2.html.twig", "C:\\Users\\MSI\\Desktop\\i-chariot-main triavanceee\\i-chariot-main\\i-chariot-main\\templates\\base2.html.twig");
     }
 }
