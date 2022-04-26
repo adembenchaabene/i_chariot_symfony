@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Categorie;
 use App\Form\CategorieType;
 use App\Repository\CategorieRepository;
@@ -11,6 +12,7 @@ use ReclamationBundle\Entity\archive;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,6 +27,7 @@ class CategorieController extends AbstractController
             'controller_name' => 'CategorieController',
         ]);
     }
+
 
     /**
      * @Route("/admin/categories", name="categorieAdmin")
@@ -162,4 +165,5 @@ class CategorieController extends AbstractController
 
         return $this->render('categorie/stats.html.twig', array('piechart' => $pieChart));
     }
+
 }

@@ -16,16 +16,16 @@
     <meta name="generator" content="Themefisher Small Apps Template v1.0">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="frontoffice/images/logoo_50.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontoffice/images/logoo_50.png')}}" />
 
     <!-- PLUGINS CSS STYLE -->
     {% block css%}
-        <link rel="stylesheet" href="frontoffice/plugins/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="frontoffice/plugins/themify-icons/themify-icons.css">
-        <link rel="stylesheet" href="frontoffice/plugins/slick/slick.css">
-        <link rel="stylesheet" href="frontoffice/plugins/slick/slick-theme.css">
-        <link rel="stylesheet" href="frontoffice/plugins/fancybox/jquery.fancybox.min.css">
-        <link rel="stylesheet" href="frontoffice/plugins/aos/aos.css">
+        <link rel="stylesheet" href="{{asset('frontoffice/plugins/bootstrap/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('frontoffice/plugins/themify-icons/themify-icons.css')}}">
+        <link rel="stylesheet" href="{{asset('frontoffice/plugins/slick/slick.css')}}">
+        <link rel="stylesheet" href="{{asset('frontoffice/plugins/slick/slick-theme.css')}}">
+        <link rel="stylesheet" href="{{asset('frontoffice/plugins/fancybox/jquery.fancybox.min.css')}}">
+        <link rel="stylesheet" href="{{asset('frontoffice/plugins/aos/aos.css')}}">
 
         <!-- CUSTOM CSS -->
         <link href="frontoffice/css/style.css" rel="stylesheet">
@@ -122,6 +122,9 @@
 <!--============================
 =            Footer            =
 =============================-->
+{% block content%}
+
+{% endblock %}
 <br> <br>
 {% block footer %}
     <footer>

@@ -2,6 +2,7 @@
 <html lang="en">
 {% block header %}
 <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -312,7 +313,9 @@
 
                                     <img class="rounded-circle" src={{asset("backoffice/img/undraw_profile_1.svg")}}
 
+
                                     alt="...">
+
                                     <div class="status-indicator bg-success"></div>
                                 </div>
                                 <div class="font-weight-bold">
@@ -326,7 +329,9 @@
 
                                     <img class="rounded-circle" src={{asset("backoffice/img/undraw_profile_2.svg")}}
 
+
                                     alt="...">
+
                                     <div class="status-indicator"></div>
                                 </div>
                                 <div>
@@ -340,7 +345,9 @@
 
                                     <img class="rounded-circle" src={{asset("backoffice/img/undraw_profile_3.svg")}}
 
+
                                     alt="...">
+
                                     <div class="status-indicator bg-warning"></div>
                                 </div>
                                 <div>
@@ -354,7 +361,9 @@
 
                                     <img class="rounded-circle" src={{asset("https://source.unsplash.com/Mv9hjnEUHR4/60x60")}}
 
+
                                     alt="...">
+
                                     <div class="status-indicator bg-success"></div>
                                 </div>
                                 <div>
@@ -408,8 +417,8 @@
 
 
 
-
             {% block content%}
+
 
             {% endblock %}
             <!-- Footer -->
@@ -474,6 +483,10 @@
     {% endblock  %}
     <!-- Page level custom scripts -->
     {% block levscripts %}
+
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js" integrity="sha256-DBxkGZLxKsLKhz054qUpBqtotG00r9AELGpSigJujLg=" crossorigin="anonymous"></script>
+
+
         <script src="{{ asset('backoffice/js/demo/chart-area-demo.js')}}"></script>
         <script src="{{ asset('backoffice/js/demo/chart-pie-demo.js')}}"></script>
     {% endblock  %}

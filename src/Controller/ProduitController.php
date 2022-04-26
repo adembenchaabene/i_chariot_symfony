@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+
 use App\Repository\CategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProduitRepository;
@@ -33,6 +35,7 @@ class ProduitController extends AbstractController
         $produits= $repository->findBy(array('idCateg'=>$categorieRepository->find($id)));
         return $this->render("produit/listproduit.html.twig",
             array('produits'=>$produits,'idCateg'=>$id));
+
     }
  
     /**
@@ -40,6 +43,7 @@ class ProduitController extends AbstractController
      */
     public function deleteProduit($id)
     {
+
         $produit= $this->getDoctrine()->getRepository(Produit::class)->find($id);
         $idCat=$produit->getIdCateg()->getIdCateg();
          $em=$this->getDoctrine()->getManager();
@@ -79,12 +83,14 @@ class ProduitController extends AbstractController
             $em->persist($produit);
             $em->flush();
             return $this->redirectToRoute("ProduitsAdmin",array('id'=>$id));
+
         }
         return $this->render("produit/addproduit.html.twig",array("produitform"=>$form->createView()));
     }
     /**
      * @Route("/updateProduit/{id}", name="updateProduit")
      */
+
     public function updateProduit(Request $request,ProduitRepository $produitRepository,$id)
     {
         $produit= $produitRepository->find($id);
@@ -143,5 +149,6 @@ class ProduitController extends AbstractController
 
         return new Response($serializedEntity);
     }
+
 }
 
