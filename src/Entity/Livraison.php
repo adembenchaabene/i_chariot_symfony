@@ -49,7 +49,7 @@ class Livraison
     /**
      * @var \Adresse
      *
-     * @ORM\ManyToOne(targetEntity="Adresse")
+     * @ORM\ManyToOne(targetEntity="Adresse",cascade={"persist","remove"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="adresse", referencedColumnName="id_adresse")
      * })

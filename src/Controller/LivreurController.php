@@ -9,8 +9,16 @@ use App\Repository\LivreurRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Livreur;
 use App\Form\LivreurType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Constraints as Assert;
+use Knp\Component\Pager\PaginatorInterface;
+use App\Form\SearchFormType;
+use Symfony\Component \Mailer\MailerInterface;
+use Symfony\Component \Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use MercurySeries\FlashyBundle\FlashyNotifier;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
+use App\Entity\Livraison;
 
 class LivreurController extends AbstractController
 {
@@ -27,55 +35,158 @@ class LivreurController extends AbstractController
     /**
      * @Route("/listLivreur", name="Livreurs")
      */
-    public function listLivreur(LivreurRepository $repository){
-        $livreurs= $repository->findAll();
+    public function listLivreur(LivreurRepository $repository, Request $request, PaginatorInterface $paginator)
+    {
+        $livreurs = $repository->findAll();
+        $livreurs = $paginator->paginate(
+            $livreurs, //on passe les données
+            $request->query->getInt('page', 1), //num de la page en cours, 1 par défaut
+            5
+        );
         return $this->render("livreur/listlivreur.html.twig",
-            array('livreurs'=>$livreurs));
+            array('livreurs' => $livreurs));
     }
 
     /**
      * @Route("/removeLivreur/{id}",name="deleteLivreur")
      */
-    public function deleteLivreur($id)
+    public function deleteLivreur($id,FlashyNotifier $flashy)
     {
-        $livreur= $this->getDoctrine()->getRepository(Livreur::class)->find($id);
-        $em=$this->getDoctrine()->getManager();
+        $livreur = $this->getDoctrine()->getRepository(Livreur::class)->find($id);
+        $em = $this->getDoctrine()->getManager();
         $em->remove($livreur);
         $em->flush();
+        $flashy->info('Ce livreur a ete supprime');
         return $this->redirectToRoute("Livreurs");
     }
 
     /**
      * @Route("/addLivreur",name="addLivreur")
      */
-    public function addLivreur( Request $request)
+    public function addLivreur(Request $request,MailerInterface $mailer,FlashyNotifier $flashy)
     {
-        $livreur= new Livreur();
-        $form= $this->createForm(LivreurType::class,$livreur);
+        $livreur = new Livreur();
+        $form = $this->createForm(LivreurType::class, $livreur);
         $form->handleRequest($request);
-        if($form->isSubmitted()  && $form->isValid() ){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($livreur);
             $em->flush();
-            return $this->redirectToRoute("Livreurs");
+            {
+                $email = (new TemplatedEmail())
+                    ->from('ichariottest11@gmail.com')
+                    ->to($livreur->getEmail())
+                    ->subject('Bienvenue')
+                    ->htmlTemplate('livreur/Emaillivreur.html.twig');
+                $mailer->send($email);
+                $flashy->success('Un nouveau livreur est ajouté');
+                return $this->redirectToRoute("Livreurs");
+            }
         }
-        return $this->render("livreur/addlivreur.html.twig",array("livreurform"=>$form->createView()));
+        return $this->render("livreur/addlivreur.html.twig", array("livreurform" => $form->createView()));
     }
 
     /**
      * @Route("/updateLivreur/{id}", name="updateLivreur")
      */
-    public function updateLivreur( Request $request,LivreurRepository $repository,$id)
+    public function updateLivreur(Request $request, LivreurRepository $repository, $id,FlashyNotifier $flashy)
     {
-        $livreur= $repository->find($id);
-        $form= $this->createForm(LivreurType::class,$livreur);
+        $livreur = $repository->find($id);
+        $form = $this->createForm(LivreurType::class, $livreur);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid() ){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+            $flashy->primaryDark('Ce livreur a ete modifier');
             return $this->redirectToRoute("Livreurs");
         }
-        return $this->render("livreur/updatelivreur.html.twig",array("livreur"=>$livreur,"form"=>$form->createView()));
+        return $this->render("livreur/updatelivreur.html.twig", array("livreur" => $livreur, "form" => $form->createView()));
     }
 
+    /**
+     * Creates a new ActionItem entity.
+     *
+     * @Route("/search", name="ajax_search")
+     *
+     */
+    public function searchAction (Request $request): Response
+    {
+        $em =$this ->getDoctrine()->getManager();
+        $requestString =$request->get('q');
+        $livreurs=$em->getRepository(Livreur::class)->findEntitiesByString($requestString);
+        if(!$livreurs){
+            $result['livreurs']['error']="livreur not found";
+        }else{
+            $result['livreurs']=$this->getRealEntities($livreurs);
+        }
+        return new Response(json_encode($result));
+    }
+
+    public function getRealEntities($livreurs)
+    {
+        foreach($livreurs as $livreur){
+            $realEntities[$livreur->getIdlivreur()]=[$livreur->getNomlivreur(),$livreur->getPrenom()];
+        }
+        return $realEntities;
+    }
+
+    /**
+     * @Route("/details/{id}", name="details")
+     */
+    public function details (Request $request,$id)
+    {
+        $livreur = $this->getDoctrine()->getRepository(Livreur::class)->find($id);
+        return $this->render("livreur/detailslivreur.html.twig",
+            array('l'=>$livreur));
+    }
+
+    /**
+     * @Route("/stat", name="stat")
+     */
+   public function stat(ChartBuilderInterface $chartBuilder): Response
+   {
+       $livreur = $this->getDoctrine()->getRepository(Livreur::class)->findAll();
+       $livreurNom = [];
+       $numlivraisons=[];
+       foreach($livreur as $l){
+           $livreurNom[] = $l->getNomlivreur();
+           $entityManager = $this->getDoctrine()->getManager();
+           $query = $entityManager->createQuery(
+               'SELECT COUNT(l) 
+            FROM  App\Entity\Livraison l
+            WHERE l.idLivreur = :id'
+           )
+               ->setParameter('id', $l->getIdlivreur());
+           $numlivraisons[]= [json_encode($l->getNomlivreur()),$query->getResult()];
+
+       }
+       $livraisons = $this->getDoctrine()->getRepository(Livraison::class)->findAll();
+       $numvalide=[];
+       $numaffecte=[];
+      /* foreach($livraisons as $l) {
+           $liv[] = $l->getIdlivraison();
+           $type[] = $l->getType();
+       }*/
+       $query = $entityManager->createQuery(
+           'SELECT COUNT(l) 
+            FROM  App\Entity\Livraison l
+            WHERE l.type = :valide'
+       )
+           ->setParameter('valide', 0);
+       $numvalide[]= [json_encode($query->getResult())];
+
+       $query = $entityManager->createQuery(
+           'SELECT COUNT(l) 
+            FROM  App\Entity\Livraison l
+            WHERE l.type = :affecte'
+       )
+           ->setParameter('affecte', 1);
+       $numaffecte[]= [json_encode($query->getResult())];
+
+       return $this->render('livreur/statistique.html.twig',['l'=>json_encode($livreurNom),'num'=>json_encode($numlivraisons),
+           'numvalide'=>json_encode($numvalide),'numaffecte'=>json_encode($numaffecte)]);
+   }
+
+
 }
+

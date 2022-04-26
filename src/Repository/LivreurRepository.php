@@ -73,4 +73,24 @@ class LivreurRepository extends ServiceEntityRepository
         ;
     }
     */
+ /*   public function searchLivreur($data)
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find(44444459);
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.nomlivreur LIKE :x')
+            ->setParameter('x', '%'.$data.'%')
+            ->getQuery()
+            ->execute();
+    }*/
+
+    public function findEntitiesByString($str){
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT p
+                FROM APP\Entity\Livreur p
+                WHERE p.nomlivreur LIKE :str'
+            )
+            ->setParameter('str', '%'.$str.'%')
+            ->getResult();
+    }
 }

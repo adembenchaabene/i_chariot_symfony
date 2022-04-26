@@ -38,6 +38,9 @@ class Livreur
      *
      * @ORM\Column(name="numtel", type="integer", nullable=false)
      * @Assert\NotBlank(message="Le numero de telephone doit etre non vide")
+     * @Assert\Length(
+     *     min=8,
+     *     max=8)
      * @Assert\Regex(
      *     pattern="/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/",
      *     message="Le numero de telephone doit etre valide"

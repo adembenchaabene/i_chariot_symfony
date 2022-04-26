@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block content %}
-
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
     <div class="container">
         <div class="row">
             <div class="col order-last text-right">
                 <br>
+                <pre>
                 <a class="btn btn-outline-info" href="{{ path('addAdresse') }}">Ajouter Adresse</a>
+                <a class="btn btn-outline-info" href="{{ path('villes') }}">Trier par ville</a>
             </div>
             <div class="col">
             </div>
@@ -66,4 +68,14 @@
     </div>
 </div>
 {% endfor %}
+    <div class="justify-content-center">
+        <div class="navigation ">
+            {{ knp_pagination_render(adresses) }}
+        </div>
+    </div>
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Include Flashy default partial -->
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 {% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base2.html.twig' %}
+{% block content %}
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Donut Chart</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="chart-pie pt-4">
+                    <canvas id="liv"></canvas>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
+    <script src="{{asset('backoffice/vendor/chart.js/Chart.min.js')}}"></script>
+
+<!-- Page level custom scripts -->
+
+    <script src="{{asset('backoffice/js/demo/chart-area-demo.js')}}"></script>
+    <script src="{{asset('backoffice/js/demo/chart-pie-demo.js')}}"></script>
+    <script src="{{asset('backoffice/js/demo/chart-bar-demo.js')}}"></script>
+    <script>
+        window.onload = () => {
+            var mychart = document.getElementById("liv").getContext('2d');
+            let liv = new Chart(mychart, {
+                type:'doughnut',
+                data:{
+                    labels: ["valide", "affecte"],
+                    datasets:[{
+                        lable:'Samples',
+                        data : [{{ numvalide | raw }},{{ numaffecte| raw }}],
+                        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
+                        hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+                        hoverBorderColor: "rgba(234, 236, 244, 1)",
+                    }]
+                }
+
+            })
+
+        }
+    </script>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br> <br>
+    <br> <br>
+    <br> <br>
+    <br>
+{% endblock %}
