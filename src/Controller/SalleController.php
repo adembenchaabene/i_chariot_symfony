@@ -13,6 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\SalleType;
@@ -65,7 +67,7 @@ class SalleController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted()&& $form->isValid()){
-            $imageFile = $form->get('image')->getData();
+            $imageFile = $form->get('img')->getData();
 
             // this condition is needed because the 'brochure' field is not required
             // so the PDF file must be processed only when a file is uploaded
@@ -100,9 +102,31 @@ class SalleController extends AbstractController
     public function updateSalle( Request $request,SalleRepository $repository,$id)
     {
         $salle= $repository->find($id);
-        $form= $this->createForm(UpdateType::class,$salle);
+        $form= $this->createForm(SalleType::class,$salle);
         $form->handleRequest($request);
         if($form->isSubmitted()){
+            $imageFile = $form->get('img')->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $imageFile->move(
+                        './uploads/salles',
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                $salle->setImage($newFilename);
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             return $this->redirectToRoute("salles");
@@ -122,7 +146,7 @@ class SalleController extends AbstractController
     /**
      * @Route("/salle/{id}", name="SalledetailFront")
      */
-    public function SalledetailFront( Request $request,SalleRepository $repository,$id,ReservationRepository $reservationRepository)
+    public function SalledetailFront( Request $request,SalleRepository $repository,$id,ReservationRepository $reservationRepository,MailerInterface $mailer)
     {
         $salle= $repository->find($id);
         $reservations=$reservationRepository->findBy(array('idSalle'=>$salle));
@@ -134,10 +158,21 @@ class SalleController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $reservation->setIdSalle($salle);
             $reservation->setIdClient($this->getDoctrine()->getRepository(User::class)->find(44444459));
+            if($reservation->getNbrp()>$salle->getCapacite()){
+                return $this->render("Salle/sallefront.html.twig",array("salle"=>$salle,'reservations'=>$reservations,'form'=>$form->createView(),'errNbr'=>'le nombre des personnes doit etre inférieur ou egal a '.$salle->getCapacite()));
+            }
             if($reservationRepository->findBySalleAndDate($salle,$reservation->getDate())==0){
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($reservation);
                 $em->flush();
+                $email = (new Email())
+                    ->from('your@email')
+                    ->to($reservation->getIdClient()->getEmail())
+                    ->subject('Réservation !')
+                    ->text('Réservation ajoutée!')
+                    ->html('<p>Mr '.$reservation->getIdClient()->getNom().' Votre réservation a été ajouté avec succe. Salle:'.$reservation->getIdSalle()->getNom().' Date de réservation:'.$reservation->getDate()->format('Y:M:D').'</p>');
+
+                $mailer->send($email);
                 $reservations=$reservationRepository->findBy(array('idSalle'=>$salle));
                 return $this->render("Salle/sallefront.html.twig",array("salle"=>$salle,'reservations'=>$reservations,'form'=>$form->createView()));
             }
@@ -158,7 +193,20 @@ class SalleController extends AbstractController
         $salle= $repository->find($id);
         $reservations=$reservationRepository->findBy(array('idSalle'=>$salle));
 
-        return $this->render("Salle/salleAdmin.html.twig",array("salle"=>$salle,'reservations'=>$reservations));
+        $rs = [];
+
+        foreach($reservations as $reservation){
+            $rs[] = [
+                'id' => $reservation->getIdreservation(),
+                'start' => $reservation->getDate()->format('Y-m-d'),
+                'end' => $reservation->getDate()->format('Y-m-d'),
+                'title' => $reservation->getIdClient()->getNom()." ".$reservation->getIdClient()->getPrenom(),
+            ];
+        }
+
+        $data = json_encode($rs);
+
+        return $this->render("Salle/salleAdmin.html.twig",array("salle"=>$salle,'reservations'=>$reservations,'data'=>$data));
     }
 
     /**

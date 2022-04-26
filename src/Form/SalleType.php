@@ -21,7 +21,7 @@ class SalleType extends AbstractType
 
             ->add('nom',TextType::class, ['attr'=>[ 'placeholder'=>'Nom de la salle']])
             ->add('prixsalle',TextType::class,['attr'=>[ 'placeholder'=>'Prix de la salle']])
-            ->add('image',
+            ->add('img',
                 FileType::class, [
                     'label' => 'image',
                     'mapped' => false,
@@ -33,7 +33,6 @@ class SalleType extends AbstractType
                     ],
                 ])
             ->add('capacite',TextType::class,['attr'=>[ 'placeholder'=>'Capacite de la salle']])
-
         ;
 
     }

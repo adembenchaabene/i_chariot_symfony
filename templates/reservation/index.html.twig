@@ -7,6 +7,7 @@
                 <label>Nombre des personnes</label>
                 {{ form_widget(form.nbrp , {'attr': {'class': 'form-control' , 'placeholder' : 'Nombre','max':salle.capacite}} ) }}
                 {{ form_errors(form.nbrp,{'attr':{'class':'text-danger'}}) }}
+                <div class="text-danger">{% if errNbr is defined %} {{ errNbr }} {% endif %}</div>
             </div>
             <div class="form-group">
                 <label>Date</label>
