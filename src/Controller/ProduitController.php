@@ -126,5 +126,22 @@ class ProduitController extends AbstractController
         return $this->render("produit/listproduitfront.html.twig",
             array('produits'=>$produits,'idCateg'=>$id,'categorie'=>$categorie));
     }
+
+    /**
+     * @Route("/triProduits", name="triProduits")
+     */
+    public function triProduits(ProduitRepository $repository,Request $request,CategorieRepository $categorieRepository){
+        $categ=$categorieRepository->findOneBy(array('idcateg'=>$request->get('idCateg')));
+        if($request->get('type')==1){
+            $produits= $repository->triPrixUp($categ);
+        }
+        else{
+            $produits= $repository->triPrixDown($categ);
+        }
+
+        $serializedEntity = $this->container->get('serializer')->serialize($produits, 'json');
+
+        return new Response($serializedEntity);
+    }
 }
 
