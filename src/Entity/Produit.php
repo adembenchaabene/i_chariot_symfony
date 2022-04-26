@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Produit
@@ -24,35 +25,46 @@ class Produit
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="Le nom doit etre non vide !")
+     * @Assert\Length(
+     *      min = 1,
+     *      max = 50,
+     *      minMessage = "le nom est vide",
+     *      maxMessage = "Le nom de produit ne doit pas depasser 50 carac" )
      * @ORM\Column(name="nomProduit", type="string", length=30, nullable=false)
      */
     private $nomproduit;
 
     /**
      * @var int
-     *
+     * @Assert\NotBlank(message="La quantité doit etre non vide !")
+     * @Assert\Range(
+     *      min=1,
+     *      max=100,
+     *      notInRangeMessage="La quantite doit etre entre 1 et 100")
      * @ORM\Column(name="quantite", type="integer", nullable=false)
      */
     private $quantite;
 
     /**
      * @var float
-     *
+     * @Assert\NotBlank(message="Prix ne doit pas etre vide !")
+     * @Assert\Range(
+     *      min=1,
+     *      notInRangeMessage="Le prix doit etre >0")
      * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
      */
     private $prix;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="La description ne doit pas etre vide !")
      * @ORM\Column(name="description", type="string", length=250, nullable=false)
      */
     private $description;
 
     /**
      * @var string
-     *
      * @ORM\Column(name="image", type="string", length=500, nullable=false)
      */
     private $image;

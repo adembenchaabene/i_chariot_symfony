@@ -45,6 +45,21 @@ class CategorieRepository extends ServiceEntityRepository
         }
     }
 
+     /**
+     * @return Categorie[] Returns an array of Categorie objects
+     */
+
+    public function rechercher($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.nomcateg like :val')
+            ->setParameter('val', '%'. $value.'%')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
     // /**
     //  * @return Categorie[] Returns an array of Categorie objects
     //  */

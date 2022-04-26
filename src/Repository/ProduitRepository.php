@@ -45,6 +45,37 @@ class ProduitRepository extends ServiceEntityRepository
         }
     }
 
+
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
+
+    public function triPrixUp($categ)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.idCateg = :val')
+            ->setParameter('val', $categ)
+            ->orderBy('p.prix', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
+
+    public function triPrixDown($categ)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.idCateg = :val')
+            ->setParameter('val', $categ)
+            ->orderBy('p.prix', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Produit[] Returns an array of Produit objects
     //  */
