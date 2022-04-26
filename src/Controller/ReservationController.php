@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Salle;
 use App\Form\ReservationType;
+use App\Form\UpdateType;
 use App\Repository\ReservationRepository;
+use App\Repository\SalleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +23,7 @@ class ReservationController extends AbstractController
             'controller_name' => 'ReservationController',
         ]);
     }
+
     /**
      * @Route("/deleteReservation/{id}",name="deleteReservation")
      */

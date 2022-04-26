@@ -160,4 +160,30 @@ class SalleController extends AbstractController
 
         return $this->render("Salle/salleAdmin.html.twig",array("salle"=>$salle,'reservations'=>$reservations));
     }
+
+    /**
+     * @Route("/rechercheSalle", name="rechercheSalle")
+     */
+    public function rechercheSalle(SalleRepository $repository,Request $request){
+        $salles=$repository->recherchesalles($request->get('valeur'));
+        $serializedEntity = $this->container->get('serializer')->serialize($salles, 'json');
+
+        return new Response($serializedEntity);
+    }
+
+    /**
+     * @Route("/triSalle", name="triSalle")
+     */
+    public function triSalle(SalleRepository $repository,Request $request){
+        if($request->get('tri')==1){
+            $salles=$repository->SallesCroissante();
+        }
+        else{
+            $salles=$repository->SallesDecroissante();
+        }
+
+        $serializedEntity = $this->container->get('serializer')->serialize($salles, 'json');
+
+        return new Response($serializedEntity);
+    }
 }

@@ -45,6 +45,46 @@ class SalleRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Salle[] Returns an array of Salle objects
+     */
+
+    public function recherchesalles($value)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.nom like :val')
+            ->setParameter('val', '%'. $value.'%')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @return Salle[] Returns an array of Salle objects
+     */
+
+    public function SallesCroissante()
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.prixsalle','ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @return Salle[] Returns an array of Salle objects
+     */
+
+    public function SallesDecroissante()
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.prixsalle','DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Salle[] Returns an array of Salle objects
     //  */
