@@ -81,16 +81,16 @@ class __TwigTemplate_122ad504612c056f457fe65cca72f6a12fdf602b0e34700deb7b8dd818a
 ";
         // line 37
         $this->displayBlock('header', $context, $blocks);
-        // line 110
+        // line 123
         echo "<!--====================================
 =            Hero Section            =
 =====================================-->
 
 <section class=\"section gradient-banner\">
     ";
-        // line 115
+        // line 128
         $this->displayBlock('body', $context, $blocks);
-        // line 118
+        // line 131
         echo "</section>
 
 <!--====  End of Hero Section  ====-->
@@ -100,14 +100,14 @@ class __TwigTemplate_122ad504612c056f457fe65cca72f6a12fdf602b0e34700deb7b8dd818a
 =============================-->
 <br> <br>
 ";
-        // line 126
+        // line 139
         $this->displayBlock('footer', $context, $blocks);
-        // line 207
+        // line 220
         echo "<!-- JAVASCRIPTS -->
 ";
-        // line 208
-        $this->displayBlock('javascripts', $context, $blocks);
         // line 221
+        $this->displayBlock('javascripts', $context, $blocks);
+        // line 234
         echo "</body>
 
 </html>";
@@ -245,6 +245,25 @@ class __TwigTemplate_122ad504612c056f457fe65cca72f6a12fdf602b0e34700deb7b8dd818a
                     <li class=\"nav-item @@contact\">
                         <a class=\"nav-link\" href=\"contact.html\">Salles</a>
                     </li>
+                    <li class=\"nav-item dropdown active\">
+                        <a class=\"nav-link dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\">Profile
+                            <span><i class=\"ti-angle-down\"></i></span>
+                        </a>
+                        <!-- Dropdown list -->
+                        <ul class=\"dropdown-menu\">
+                            <li><a class=\"dropdown-item active\" href=\"";
+        // line 111
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_user_profile");
+        echo "\">Edit profile</a></li>
+                            <li><a class=\"dropdown-item\" href=\"";
+        // line 112
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_logout");
+        echo "\">Logout</a></li>
+
+
+
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -258,7 +277,7 @@ class __TwigTemplate_122ad504612c056f457fe65cca72f6a12fdf602b0e34700deb7b8dd818a
 
     }
 
-    // line 115
+    // line 128
     public function block_body($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -268,7 +287,7 @@ class __TwigTemplate_122ad504612c056f457fe65cca72f6a12fdf602b0e34700deb7b8dd818a
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "body"));
 
-        // line 116
+        // line 129
         echo "
     ";
         
@@ -279,7 +298,7 @@ class __TwigTemplate_122ad504612c056f457fe65cca72f6a12fdf602b0e34700deb7b8dd818a
 
     }
 
-    // line 126
+    // line 139
     public function block_footer($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -289,7 +308,7 @@ class __TwigTemplate_122ad504612c056f457fe65cca72f6a12fdf602b0e34700deb7b8dd818a
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "footer"));
 
-        // line 127
+        // line 140
         echo "    <footer>
         <div class=\"footer-main\">
             <div class=\"container\">
@@ -378,7 +397,7 @@ class __TwigTemplate_122ad504612c056f457fe65cca72f6a12fdf602b0e34700deb7b8dd818a
 
     }
 
-    // line 208
+    // line 221
     public function block_javascripts($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -388,7 +407,7 @@ class __TwigTemplate_122ad504612c056f457fe65cca72f6a12fdf602b0e34700deb7b8dd818a
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "javascripts"));
 
-        // line 209
+        // line 222
         echo "    <script src=\"frontoffice/plugins/jquery/jquery.min.js\"></script>
     <script src=\"frontoffice/plugins/bootstrap/bootstrap.min.js\"></script>
     <script src=\"frontoffice/plugins/slick/slick.min.js\"></script>
@@ -416,7 +435,7 @@ class __TwigTemplate_122ad504612c056f457fe65cca72f6a12fdf602b0e34700deb7b8dd818a
 
     public function getDebugInfo()
     {
-        return array (  392 => 209,  382 => 208,  293 => 127,  283 => 126,  272 => 116,  262 => 115,  181 => 38,  171 => 37,  152 => 23,  142 => 22,  123 => 8,  111 => 221,  109 => 208,  106 => 207,  104 => 126,  94 => 118,  92 => 115,  85 => 110,  83 => 37,  77 => 33,  75 => 22,  58 => 8,  49 => 1,);
+        return array (  411 => 222,  401 => 221,  312 => 140,  302 => 139,  291 => 129,  281 => 128,  260 => 112,  256 => 111,  181 => 38,  171 => 37,  152 => 23,  142 => 22,  123 => 8,  111 => 234,  109 => 221,  106 => 220,  104 => 139,  94 => 131,  92 => 128,  85 => 123,  83 => 37,  77 => 33,  75 => 22,  58 => 8,  49 => 1,);
     }
 
     public function getSourceContext()
@@ -524,6 +543,19 @@ class __TwigTemplate_122ad504612c056f457fe65cca72f6a12fdf602b0e34700deb7b8dd818a
                     </li>
                     <li class=\"nav-item @@contact\">
                         <a class=\"nav-link\" href=\"contact.html\">Salles</a>
+                    </li>
+                    <li class=\"nav-item dropdown active\">
+                        <a class=\"nav-link dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\">Profile
+                            <span><i class=\"ti-angle-down\"></i></span>
+                        </a>
+                        <!-- Dropdown list -->
+                        <ul class=\"dropdown-menu\">
+                            <li><a class=\"dropdown-item active\" href=\"{{ path('app_user_profile') }}\">Edit profile</a></li>
+                            <li><a class=\"dropdown-item\" href=\"{{ path('app_logout') }}\">Logout</a></li>
+
+
+
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -643,6 +675,6 @@ class __TwigTemplate_122ad504612c056f457fe65cca72f6a12fdf602b0e34700deb7b8dd818a
 {% endblock %}
 </body>
 
-</html>", "home/index.html.twig", "C:\\Users\\MSI\\Desktop\\i-chariot-main\\i-chariot-main\\templates\\home\\index.html.twig");
+</html>", "home/index.html.twig", "C:\\Users\\MSI\\Desktop\\i-chariot-main triavanceee\\i-chariot-main\\i-chariot-main\\templates\\home\\index.html.twig");
     }
 }

@@ -26,7 +26,7 @@ class UserType extends AbstractType
                 'captchaConfig' => 'ExampleCaptcha'
             ))
             ->add('isExpired',CheckboxType::class, [
-                'label'    => false,
+                'label'    => "Bloquer",
                 'required' => false,
             ])
         ;
