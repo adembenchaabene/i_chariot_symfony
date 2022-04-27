@@ -37,7 +37,10 @@
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
         "cmen/google-charts-bundle": "^4.0",
-        "ext-json": "*"
+        "ext-json": "*" ,
+        "botman/botman": "^2.6",
+        "botman/driver-web": "^1.5"
+       
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
