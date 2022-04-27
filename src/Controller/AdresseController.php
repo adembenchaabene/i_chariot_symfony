@@ -81,18 +81,30 @@ class AdresseController extends AbstractController
     /**
      * @Route("/listAdresses", name="adresses")
      */
-    public function listAdressesByuser( Request $request,AdresseRepository $repository,PaginatorInterface $paginator){
+    public function listAdressesByuser(Request $request,AdresseRepository $repository,PaginatorInterface $paginator){
+
         $user = $this->getDoctrine()->getRepository(User::class)->find(44444459);
         $adresses = $this->getDoctrine()->getManager()
             ->getRepository(Adresse::class)
             ->findBy(['iduser' => $user]);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $query = $entityManager->createQuery(
+            'SELECT a.ville
+            FROM  App\Entity\Adresse a
+            WHERE a.iduser = :id'
+        )
+            ->setParameter('id', 44444459);
+
+        $ad=$query->getResult();
+        dd($ad);
         $adresses= $paginator->paginate(
             $adresses, //on passe les données
             $request->query->getInt('page', 1), //num de la page en cours, 1 par défaut
             2
         );
-        return $this->render("adresse/listadresse.html.twig",
-            array('adresses'=>$adresses));
+        return $this->render("adresse/listadresse.html.twig",array("adresse"=>$adresses,"ville" => $adresses));
+
     }
 
     /**
@@ -119,6 +131,7 @@ class AdresseController extends AbstractController
         return $this->render("adresse/listadresse.html.twig",
             array('adresses'=>$adresses));
     }
+
 
 
 }

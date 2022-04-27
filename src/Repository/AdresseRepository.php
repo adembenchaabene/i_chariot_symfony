@@ -73,4 +73,15 @@ class AdresseRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findByVille($value)
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.ville = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 }

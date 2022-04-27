@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use PHPUnit\Framework\Constraint\Count;
 
 /**
  * @method Livreur|null find($id, $lockMode = null, $lockVersion = null)
@@ -93,4 +94,6 @@ class LivreurRepository extends ServiceEntityRepository
             ->setParameter('str', '%'.$str.'%')
             ->getResult();
     }
+
+
 }

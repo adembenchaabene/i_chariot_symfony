@@ -19,6 +19,8 @@ use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 use App\Entity\Livraison;
+use App\Repository\AdresseRepository;
+use App\Entity\Adresse;
 
 class LivreurController extends AbstractController
 {
@@ -145,46 +147,82 @@ class LivreurController extends AbstractController
      */
    public function stat(ChartBuilderInterface $chartBuilder): Response
    {
+       //livreur par nbr livraison
        $livreur = $this->getDoctrine()->getRepository(Livreur::class)->findAll();
        $livreurNom = [];
+       $all=[];
        $numlivraisons=[];
        foreach($livreur as $l){
-           $livreurNom[] = $l->getNomlivreur();
            $entityManager = $this->getDoctrine()->getManager();
            $query = $entityManager->createQuery(
                'SELECT COUNT(l) 
             FROM  App\Entity\Livraison l
-            WHERE l.idLivreur = :id'
+             JOIN l.idLivreur c 
+             WHERE l.idLivreur = :id'
            )
                ->setParameter('id', $l->getIdlivreur());
-           $numlivraisons[]= [json_encode($l->getNomlivreur()),$query->getResult()];
+           $livreurNom[] = $l->getNomlivreur();
+           $all[]=$query->getResult();
 
        }
-       $livraisons = $this->getDoctrine()->getRepository(Livraison::class)->findAll();
-       $numvalide=[];
-       $numaffecte=[];
-      /* foreach($livraisons as $l) {
-           $liv[] = $l->getIdlivraison();
-           $type[] = $l->getType();
-       }*/
+       foreach($all as $l){
+           foreach($l as $li) {
+               foreach($li as $lo) {
+                   $numlivraisons[] = $lo;
+               }
+           }
+       }
+
+//livraison par type
        $query = $entityManager->createQuery(
            'SELECT COUNT(l) 
             FROM  App\Entity\Livraison l
-            WHERE l.type = :valide'
+            WHERE l.type = :rapide'
        )
-           ->setParameter('valide', 0);
-       $numvalide[]= [json_encode($query->getResult())];
+           ->setParameter('rapide', "rapide");
+       $numrapide[]= [json_encode($query->getResult())];
 
        $query = $entityManager->createQuery(
            'SELECT COUNT(l) 
             FROM  App\Entity\Livraison l
-            WHERE l.type = :affecte'
+            WHERE l.type = :normal'
        )
-           ->setParameter('affecte', 1);
-       $numaffecte[]= [json_encode($query->getResult())];
+           ->setParameter('normal', "normal");
+       $numnormal[]= [json_encode($query->getResult())];
+
+       //adresse par nbr livraison
+       $adresse = $this->getDoctrine()->getRepository(Adresse::class)->findAll();
+       $ville = [];
+       $alladd=[];
+       $nbrliv=[];
+       foreach($adresse as $l){
+           $entityManager = $this->getDoctrine()->getManager();
+           $query = $entityManager->createQuery(
+               'SELECT COUNT(l) 
+            FROM  App\Entity\Livraison l
+             JOIN l.adresse c 
+             WHERE l.adresse = :id'
+           )
+               ->setParameter('id', $l->getIdAdresse());
+
+           $ville[] = $l->getVille();
+           $alladd[]=$query->getResult();
+
+       }
+       foreach($alladd as $l){
+           foreach($l as $li) {
+               foreach($li as $lo) {
+                   $nbrliv[] = $lo;
+               }
+           }
+       }
 
        return $this->render('livreur/statistique.html.twig',['l'=>json_encode($livreurNom),'num'=>json_encode($numlivraisons),
-           'numvalide'=>json_encode($numvalide),'numaffecte'=>json_encode($numaffecte)]);
+           'numrapide'=>json_encode($numrapide[0][0][6]),'numnormal'=>json_encode($numnormal[0][0][6]),
+           'ville'=>json_encode($ville),'nbr'=>json_encode($nbrliv),
+
+       ])
+           ;
    }
 
 
