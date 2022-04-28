@@ -71,7 +71,7 @@ class Salle
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
@@ -83,7 +83,7 @@ class Salle
         return $this->prixsalle;
     }
 
-    public function setPrixsalle(float $prixsalle): self
+    public function setPrixsalle(?float $prixsalle): self
     {
         $this->prixsalle = $prixsalle;
 
@@ -95,7 +95,7 @@ class Salle
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage(?string $image): self
     {
         $this->image = $image;
 
@@ -107,7 +107,7 @@ class Salle
         return $this->capacite;
     }
 
-    public function setCapacite(int $capacite): self
+    public function setCapacite(?int $capacite): self
     {
         $this->capacite = $capacite;
 
