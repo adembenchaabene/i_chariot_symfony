@@ -125,6 +125,7 @@ class ProduitController extends AbstractController
         $produits= $repository->findBy(array('idCateg'=>$categorie));
         return $this->render("produit/listproduitfront.html.twig",
             array('produits'=>$produits,'idCateg'=>$id,'categorie'=>$categorie));
+
     }
 
     /**

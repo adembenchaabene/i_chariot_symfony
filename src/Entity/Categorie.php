@@ -58,7 +58,7 @@ class Categorie
         return $this->nomcateg;
     }
 
-    public function setNomcateg(string $nomcateg): self
+    public function setNomcateg(?string $nomcateg): self
     {
         $this->nomcateg = $nomcateg;
 
@@ -70,7 +70,7 @@ class Categorie
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
