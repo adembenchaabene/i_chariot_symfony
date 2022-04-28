@@ -88,22 +88,13 @@ class AdresseController extends AbstractController
             ->getRepository(Adresse::class)
             ->findBy(['iduser' => $user]);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $query = $entityManager->createQuery(
-            'SELECT a.ville
-            FROM  App\Entity\Adresse a
-            WHERE a.iduser = :id'
-        )
-            ->setParameter('id', 44444459);
 
-        $ad=$query->getResult();
-        dd($ad);
         $adresses= $paginator->paginate(
             $adresses, //on passe les données
             $request->query->getInt('page', 1), //num de la page en cours, 1 par défaut
             2
         );
-        return $this->render("adresse/listadresse.html.twig",array("adresse"=>$adresses,"ville" => $adresses));
+        return $this->render("adresse/listadresse.html.twig",array("adresses"=>$adresses,"ville" => $adresses));
 
     }
 

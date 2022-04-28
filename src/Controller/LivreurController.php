@@ -113,7 +113,7 @@ class LivreurController extends AbstractController
      */
     public function searchAction (Request $request): Response
     {
-        $em =$this ->getDoctrine()->getManager();
+        $em =$this->getDoctrine()->getManager();
         $requestString =$request->get('q');
         $livreurs=$em->getRepository(Livreur::class)->findEntitiesByString($requestString);
         if(!$livreurs){

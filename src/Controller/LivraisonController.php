@@ -90,6 +90,31 @@ class LivraisonController extends AbstractController
     }
 
     /**
+     * @Route("/filtre/{type}", name="filtres")
+     */
+    public function filtrelivraisonsByuser( $type,Request $request,LivraisonRepository $repository, PaginatorInterface $paginator){
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $query = $entityManager->createQuery(
+            'SELECT l
+            FROM  App\Entity\Livraison l
+            WHERE l.iduser = :id
+            AND l.type = :type'
+        )
+            ->setParameter('type', $type)
+            ->setParameter('id', 44444459);
+
+        $livraison=$query->getResult();
+        $livraison = $paginator->paginate(
+            $livraison, //on passe les données
+            $request->query->getInt('page', 1), //num de la page en cours, 1 par défaut
+            2
+        );
+        return $this->render("livraison/listlivraisonclient.html.twig",
+            array('livraisons'=>$livraison));
+    }
+
+    /**
      * @Route("/addLivraison",name="addLivraison")
      */
     public function addLivraison( Request $request)
