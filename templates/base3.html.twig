@@ -14,6 +14,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontoffice/images/logo1.png')}}" />
 
     {% block css%}
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
         <link rel="stylesheet" href="{{asset('frontoffice/plugins/bootstrap/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('frontoffice/plugins/themify-icons/themify-icons.css')}}">
         <link rel="stylesheet" href="{{asset('frontoffice/plugins/slick/slick.css')}}">
@@ -22,6 +23,9 @@
         <link rel="stylesheet" href="{{asset('frontoffice/plugins/aos/aos.css')}}">
 
         <link href="{{asset('frontoffice/css/style.css')}}" rel="stylesheet">
+
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/starrating/css/rating.css') }}" />
     {% endblock %}
 
 </head>
@@ -203,6 +207,10 @@
 <script src="{{asset('frontoffice/plugins/google-map/gmap.js')}}"></script>
 
 <script src="{{asset('frontoffice/js/script.js')}}"></script>
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="{{ asset('bundles/starrating/js/rating.js') }}"></script>
 {% endblock %}
 </body>
 

@@ -4,10 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Commentaire;
+use App\Entity\Rating;
 use App\Form\ArticleType;
 use App\Form\CommentaireType;
+use App\Form\RatingType;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentaireRepository;
+use App\Repository\RatingRepository;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,12 +34,17 @@ class ArticleController extends AbstractController
         ]);
     }
     /**
-     * @Route("/affichearticles", name="getarticles")
+     * @Route("/admin/articles", name="getarticles")
      */
-    public function afficheArticle(ArticleRepository $repository){
+    public function afficheArticle(ArticleRepository $repository,Request $request,PaginatorInterface $paginator){
         $articles= $repository->findByExampleField("desarchive");
+        $pagedArticles = $paginator->paginate(
+            $articles, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            3 // Nombre de résultats par page
+        );
         return $this->render("article/afficheArticle.html.twig",
-            array('articles'=>$articles));
+            array('articles'=>$pagedArticles));
     }
     /**
      * @Route("/removeArticle/{id}",name="deleteArticle")
@@ -120,13 +131,40 @@ class ArticleController extends AbstractController
     /**
      * @Route("/article/{id}", name="articledetail")
      */
-    public function Article(ArticleRepository $articleRepository,CommentaireRepository $commentaireRepository,$id,Request $request){
+    public function Article(ArticleRepository $articleRepository,CommentaireRepository $commentaireRepository,RatingRepository $ratingRepository,$id,Request $request){
         $article= $articleRepository->find($id);
         $commentaires=$commentaireRepository->findByArticle($article);
+        $ratings=$ratingRepository->findBy(array('article'=>$article));
+        $total=0;
+        $nbr=0;
+        foreach ($ratings as $r){
+            $total+=$r->getNote();
+            $nbr++;
+        }
+        if($nbr==0){
+            $moy=0;
+        }
+        else{
+            $moy=$total/$nbr;
+        }
+
 
         $commentaire=new Commentaire();
         $form= $this->createForm(CommentaireType::class,$commentaire);
         $form->handleRequest($request);
+
+        $rating=new Rating();
+        $formRating=$this->createForm(RatingType::class,$rating);
+        $formRating->handleRequest($request);
+
+        if($formRating->isSubmitted() && $formRating->isValid()){
+            $rating->setArticle($article);
+            $rating->setUser($article->getAuteur());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($rating);
+            $em->flush();
+            return $this->redirectToRoute("articledetail",array('id'=>$id));
+        }
 
         if($form->isSubmitted() && $form->isValid()){
             $commentaire->setIdArticle($article);
@@ -138,7 +176,7 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute("articledetail",array('id'=>$id));
         }
         return $this->render("article/article.html.twig",
-            array('article'=>$article,'commentaires'=>$commentaires,'form'=>$form->createView()));
+            array('article'=>$article,'commentaires'=>$commentaires,'form'=>$form->createView(),'formRating'=>$formRating->createView(),'rating'=>round($moy, 2)));
     }
 
     /**
@@ -170,6 +208,33 @@ class ArticleController extends AbstractController
             $realEntities[$article->getIdarticle()] = [$article->getTitre(),$article->getContenu(),$article->getEtat(),$article->getImage(),$article->getAuteur()->getNom()];
         }
         return $realEntities;
+    }
+
+    /**
+     * @Route("/PDFArticles",name="PDFArticles")
+     */
+    public function PDFArticles(ArticleRepository $repository)
+    {
+
+
+        $pdfoptions=new Options();
+        $pdfoptions->set('defaultFont','Arial');
+        //$pdfoptions->setIsRemoteEnabled(true);
+        $pdfoptions->set('isHtml5ParserEnabled',true);
+        $pdfoptions->set('isRemoteEnabled',true);
+        $dompdf= new Dompdf($pdfoptions);
+        $articles=$repository->findByExampleField("desarchive");
+        $html=$this->renderView('article/pdf.html.twig',[
+            'articles'=>$articles
+        ]);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4','landscape');
+
+        $dompdf->render();
+        $dompdf->stream("articles.pdf", ["Attachment"=>false]);
+
+
     }
 }
 

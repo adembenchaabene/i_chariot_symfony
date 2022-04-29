@@ -80,6 +80,8 @@ class ArticleRepository extends ServiceEntityRepository
     public function search($value)
     {
         return $this->createQueryBuilder('a')
+            ->andWhere('a.etat = :etat')
+            ->setParameter('etat', "desarchive")
             ->andWhere('a.titre like :val')
             ->setParameter('val', '%'. $value.'%')
             ->getQuery()

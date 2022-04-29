@@ -13,8 +13,8 @@
                         <li class="list-inline-item">
                             <a href="#">{{article.auteur.nom}}</a>
                         </li>
-                        <li class="list-inline-item">
-                            <a href="#">March 8, 2022</a>
+                        <li class="list-inline-item"  >
+                            <a href="#">{{ rating }}/5<i class="ti-star"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -23,6 +23,16 @@
                         <img class="img-fluid" src="{{ asset('uploads/articles/' ~ article.image ) }}" alt="feature-image">
                     </div>
                     <p>{{article.contenu}}</p>
+                    <br>
+                    <div>
+                        {{ form_start(formRating) }}
+                        <div class="form-group">
+                            <h4>Give us your feedback</h4>
+                            {{ form_widget(formRating.note) }}
+                        </div>
+                            {{ form_widget(formRating.Submit) }}
+                        {{ form_end(formRating) }}
+                    </div>
 
                 </div>
             </article>
@@ -53,7 +63,16 @@
                                 <h6>{{ c.datepub|date }}</h6>
                                 <p>{{ c.contenuC }}</p>
                                 <ul class="list-inline social-links">
-                                    <li class="list-inline-item"><a href="javascript:void(0)"><i class="ti-heart"></i> 2</a></li>
+                                    <li class="list-inline-item">
+                                        <a href="{{ path('comm_react', {'id' : c.idcommentaire}) }}" class ="btn btn-link js-like">
+                                        {% if c.auteurC and c.isLikedByUser(c.auteurC) %}
+                                            <i class="fas fa-thumbs-up"></i>
+                                        {% else %}
+                                            <i class="far fa-thumbs-up"></i>
+                                        {% endif %}
+                                       <span class ="js-likes"> {{  c.reacts|length }} </span></a>
+
+                                    </li>
                                 </ul>
                             </div>
                             <div class="col-8 text-right">
@@ -144,10 +163,11 @@
                         'idarticle':val
                     },
                     success: function(msg){
+                        console.log(msg);
                         var result = JSON.parse(msg);
+                        console.log(result)
                         if(result.length!==0){
                             for(let i = 0; i < result.length; i++){
-                                console.log(result[i]);
                                 entitySelector.append(
                                     '<div class="media">'+
                                     '<div class="image">'+
@@ -170,11 +190,34 @@
                             }
                         }
                         else{
-                            entitySelector.append('<div class="error">'+value+'</div>');
+                            entitySelector.append('<div class="error">Aucun commentaire trouvé</div>');
                         }
                     }
                 });
             });
         });
+    </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function onclickBtnLike(event){
+            event.preventDefault();
+            const url = this.href;
+            const spanCount = this.querySelector('span.js-likes');
+            const icon = this.querySelector('i');
+            axios.get(url).then(function(response){
+               const reacts = response.data.react;
+               spanCount.textContent = reacts;
+               if(icon.classList.contains('fas')) {
+                   icon.classList.replace('fas', 'far');
+               }
+                else{
+                   icon.classList.replace('far', 'fas');
+               }
+
+            })
+        }
+        document.querySelectorAll('a.js-like').forEach(function (link){
+            link.addEventListener('click',onclickBtnLike);
+        })
     </script>
 {% endblock %}
