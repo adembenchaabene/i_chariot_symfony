@@ -37,7 +37,8 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                {{ form_start(form) }}
+                {{ form_start(form, {attr:{novalidate:'novalidate' }}) }}
+
                 <div class="form-group">
                     <label>Nombre des personnes</label>
                     {{ form_widget(form.nbrp , {'attr': {'class': 'form-control' , 'placeholder' : 'Nombre'}} ) }}

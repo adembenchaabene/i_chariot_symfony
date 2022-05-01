@@ -24,7 +24,7 @@ class Reservation
 
     /**
      * @var \DateTime
-     *
+     * @Assert\NotBlank(message="la date ne doit pas etre vide !")
      * @ORM\Column(name="date", type="date", nullable=false)
      * @Assert\GreaterThan("today")
      */
