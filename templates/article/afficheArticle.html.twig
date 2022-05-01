@@ -46,26 +46,23 @@
                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                            <thead>
                            <tr>
-                               <th>Id</th>
                                <th>contenu</th>
                                <th>titre</th>
                                <th>image</th>
                                <th>nbr react</th>
-                               <th>Supprimer</th>
-                               <th>update</th>
                            </tr>
                            </thead>
                            <tbody>
                            <tr>
                                {% for c in articles %}
                            <tr>
-                               <td>{{c.idarticle}}</td>
                                <td>{{c.contenu}}</td>
                                <td>{{c.titre}}</td>
                                <td><img src="{{ asset('uploads/articles/' ~ c.image ) }}" alt="" width="200" height="200"></td>
                                <td>{{c.nbrreact}}</td>
-                               <td><a href="{{ path('deleteArticle',{'id':c.idarticle}) }}" class="btn btn-primary ">Supprimer</a></td>
+                               <td><a href="{{ path('articledetailadmin',{'id':c.idarticle}) }}" class="btn btn-primary ">See more</a></td>
                                <td><a href="{{ path('updateArticle',{'id':c.idarticle}) }}" class="btn btn-primary ">update</a></td>
+                               <td><a href="{{ path('deleteArticle',{'id':c.idarticle}) }}" class="btn btn-primary ">Supprimer</a></td>
                            </tr>
                            {% endfor %}
                            {{ knp_pagination_render(articles,('paginator/pagination.html.twig')) }}

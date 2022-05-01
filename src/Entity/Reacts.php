@@ -46,9 +46,7 @@ class Reacts
      *
      * @ORM\Column(name="datecrea", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-
     private $datecrea;
-
 
     public function getIdCommentaire(): ?Commentaire
     {

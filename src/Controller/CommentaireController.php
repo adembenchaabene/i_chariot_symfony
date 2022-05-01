@@ -9,7 +9,6 @@ use App\Repository\ArticleRepository;
 use App\Repository\CommentaireRepository;
 use App\Repository\ReactsRepository;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,7 +25,6 @@ class CommentaireController extends AbstractController
             'controller_name' => 'CommentaireController',
         ]);
     }
-
 
     /**
      * @Route("/deleteCommentAdmin/{id}",name="deleteCommentAdmin")
@@ -166,5 +164,4 @@ class CommentaireController extends AbstractController
             ],200);
 
     }
-
 }

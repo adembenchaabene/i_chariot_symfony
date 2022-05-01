@@ -6,17 +6,16 @@ use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
 use Symfony\Component\Validator\Constraints as Assert;
 use Vangrg\ProfanityBundle\Validator\Constraints as ProfanityAssert;
-
 
 
 /**
  * Commentaire
  *
- * @ORM\Table(name="commentaire", indexes={@ORM\Index(name="auteur_c", columns={"auteur_c"}), @ORM\Index(name="id_article", columns={"id_article"})})
+ * @ORM\Table(name="commentaire", indexes={@ORM\Index(name="id_article", columns={"id_article"}), @ORM\Index(name="auteur_c", columns={"auteur_c"})})
  * @ORM\Entity
+ *@ORM\Entity(repositoryClass="App\Repository\CommentaireRepository")
  */
 class Commentaire
 {

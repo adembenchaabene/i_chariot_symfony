@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-
 use App\Entity\Commentaire;
 use App\Entity\Rating;
 use App\Form\ArticleType;
@@ -15,7 +14,6 @@ use App\Repository\RatingRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Knp\Component\Pager\PaginatorInterface;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -238,6 +236,5 @@ class ArticleController extends AbstractController
 
 
     }
-
 }
 
