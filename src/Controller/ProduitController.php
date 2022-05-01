@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-
 use App\Repository\CategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProduitRepository;
@@ -14,6 +12,7 @@ use App\Entity\Produit;
 use App\Form\ProduitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Knp\Component\Pager\PaginatorInterface;
 
 class ProduitController extends AbstractController
 {
@@ -35,7 +34,6 @@ class ProduitController extends AbstractController
         $produits= $repository->findBy(array('idCateg'=>$categorieRepository->find($id)));
         return $this->render("produit/listproduit.html.twig",
             array('produits'=>$produits,'idCateg'=>$id));
-
     }
  
     /**
@@ -43,7 +41,6 @@ class ProduitController extends AbstractController
      */
     public function deleteProduit($id)
     {
-
         $produit= $this->getDoctrine()->getRepository(Produit::class)->find($id);
         $idCat=$produit->getIdCateg()->getIdCateg();
          $em=$this->getDoctrine()->getManager();
@@ -83,14 +80,12 @@ class ProduitController extends AbstractController
             $em->persist($produit);
             $em->flush();
             return $this->redirectToRoute("ProduitsAdmin",array('id'=>$id));
-
         }
         return $this->render("produit/addproduit.html.twig",array("produitform"=>$form->createView()));
     }
     /**
      * @Route("/updateProduit/{id}", name="updateProduit")
      */
-
     public function updateProduit(Request $request,ProduitRepository $produitRepository,$id)
     {
         $produit= $produitRepository->find($id);
@@ -126,11 +121,17 @@ class ProduitController extends AbstractController
     /**
      * @Route("/produits/{id}", name="Produits")
      */
-    public function listProduitFront(ProduitRepository $repository,$id,CategorieRepository $categorieRepository){
+    public function listProduitFront(ProduitRepository $repository,$id,CategorieRepository $categorieRepository,Request $request,PaginatorInterface $paginator){
         $categorie=$categorieRepository->find($id);
         $produits= $repository->findBy(array('idCateg'=>$categorie));
+        $pagedOffers = $paginator->paginate(
+            $produits, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            3 // Nombre de résultats par page
+        );
         return $this->render("produit/listproduitfront.html.twig",
-            array('produits'=>$produits,'idCateg'=>$id,'categorie'=>$categorie));
+            array('produits'=>$pagedOffers,'idCateg'=>$id,'categorie'=>$categorie));
+
     }
 
     /**
@@ -149,6 +150,5 @@ class ProduitController extends AbstractController
 
         return new Response($serializedEntity);
     }
-
 }
 
