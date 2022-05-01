@@ -14,8 +14,14 @@ return [
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
 
+
     CalendarBundle\CalendarBundle::class => ['all' => true],
 
     CMEN\GoogleChartsBundle\CMENGoogleChartsBundle::class => ['all' => true],
+    
+
+    blackknight467\StarRatingBundle\StarRatingBundle::class => ['all' => true],
+    Vangrg\ProfanityBundle\VangrgProfanityBundle::class => ['all' => true],
+    Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
 
 ];

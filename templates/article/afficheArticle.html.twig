@@ -68,11 +68,14 @@
                                <td><a href="{{ path('updateArticle',{'id':c.idarticle}) }}" class="btn btn-primary ">update</a></td>
                            </tr>
                            {% endfor %}
+                           {{ knp_pagination_render(articles,('paginator/pagination.html.twig')) }}
                            </tbody>
                            <tfoot>
                            <tr><a class="btn btn-success" href="{{ path('addArticle') }}">Ajouter Article</a></tr>
                            </tfoot>
                        </table>
+                       <br>
+                       <a href="{{ path('PDFArticles') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Pdf</a>
                    </div>
                </div>
            </div>
