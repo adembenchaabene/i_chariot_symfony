@@ -2,7 +2,16 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+<<<<<<< HEAD
+=======
+use Symfony\Component\Validator\Constraints as Assert;
+use Vangrg\ProfanityBundle\Validator\Constraints as ProfanityAssert;
+
+>>>>>>> 3ca17088e6b15fa8b1997d470b77f8774ec0a855
 
 /**
  * Commentaire
@@ -25,15 +34,25 @@ class Commentaire
      * @var string
      *
      * @ORM\Column(name="contenu_c", type="text", length=65535, nullable=false)
+<<<<<<< HEAD
+=======
+     * @Assert\NotBlank(message="description  doit etre non vide")
+     * @Assert\Length(
+     *      min = 7,
+     *      max = 100,
+     *      minMessage = "doit etre >=7 ",
+     *      maxMessage = "doit etre <=100" )
+     * @ProfanityAssert\ProfanityCheck
+>>>>>>> 3ca17088e6b15fa8b1997d470b77f8774ec0a855
      */
     private $contenuC;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="datepub", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="datepub", type="datetime", nullable=false)
      */
-    private $datepub = 'current_timestamp()';
+    private $datepub;
 
     /**
      * @var \Article
@@ -54,6 +73,17 @@ class Commentaire
      * })
      */
     private $auteurC;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Reacts", mappedBy="idcommentaire",orphanRemoval=true)
+     */
+    private $reacts;
+
+    public function __construct()
+    {
+        $this->datepub = new \DateTime();
+        $this->reacts = new ArrayCollection();
+    }
 
     public function getIdcommentaire(): ?int
     {
@@ -109,4 +139,37 @@ class Commentaire
     }
 
 
+    /**
+     * @return Collection|Reacts[]
+     */
+    public function getReacts(): Collection
+    {
+        return $this->reacts;
+    }
+    public function addReacts(Reacts $r): self
+    {
+        if (!$this->reacts->contains($r)) {
+            $this->reacts[] = $r;
+            $r->setIdCommentaire($this);
+        }
+        return $this;
+    }
+    public function removeReacts(Reacts $r): self
+    {
+        if ($this->reacts->contains($r)) {
+            $this->reacts->removeElement($r);
+            // set the owning side to null (unless already changed)
+            if ($r->getIdCommentaire() === $this) {
+                $r->setIdCommentaire(null);
+            }
+        }
+        return $this;
+    }
+    public function isLikedByUser(User $user) : bool{
+        foreach($this->reacts as $react){
+            if($react->getIdusers() == $user) return true;
+
+        }
+        return false;
+    }
 }

@@ -74,14 +74,31 @@ class AdresseRepository extends ServiceEntityRepository
     }
     */
 
+<<<<<<< HEAD:src/Repository/AdresseRepository.php
     public function findByVille($value)
     {
         return $this->createQueryBuilder('v')
             ->andWhere('v.ville = :val')
             ->setParameter('val', $value)
+=======
+    /**
+     * @return Article[] Returns an array of Article objects
+     */
+
+    public function search($value)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.etat = :etat')
+            ->setParameter('etat', "desarchive")
+            ->andWhere('a.titre like :val')
+            ->setParameter('val', '%'. $value.'%')
+>>>>>>> 3ca17088e6b15fa8b1997d470b77f8774ec0a855:src/Repository/ArticleRepository.php
             ->getQuery()
             ->getResult()
             ;
     }
+<<<<<<< HEAD:src/Repository/AdresseRepository.php
 
+=======
+>>>>>>> 3ca17088e6b15fa8b1997d470b77f8774ec0a855:src/Repository/ArticleRepository.php
 }

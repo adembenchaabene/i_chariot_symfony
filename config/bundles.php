@@ -13,7 +13,15 @@ return [
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
+<<<<<<< HEAD
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
     MercurySeries\FlashyBundle\MercurySeriesFlashyBundle::class => ['all' => true],
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
+=======
+    CalendarBundle\CalendarBundle::class => ['all' => true],
+    CMEN\GoogleChartsBundle\CMENGoogleChartsBundle::class => ['all' => true],
+    blackknight467\StarRatingBundle\StarRatingBundle::class => ['all' => true],
+    Vangrg\ProfanityBundle\VangrgProfanityBundle::class => ['all' => true],
+    Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
+>>>>>>> 3ca17088e6b15fa8b1997d470b77f8774ec0a855
 ];

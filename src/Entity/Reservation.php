@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Reservation
  *
  * @ORM\Table(name="reservation", indexes={@ORM\Index(name="id_client", columns={"id_client"}), @ORM\Index(name="id_salle", columns={"id_salle"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ReservationRepository")
  */
 class Reservation
 {
@@ -23,8 +24,9 @@ class Reservation
 
     /**
      * @var \DateTime
-     *
+     * @Assert\NotBlank(message="la date ne doit pas etre vide !")
      * @ORM\Column(name="date", type="date", nullable=false)
+     * @Assert\GreaterThan("today")
      */
     private $date;
 
@@ -32,6 +34,10 @@ class Reservation
      * @var int
      *
      * @ORM\Column(name="nbrP", type="integer", nullable=false)
+     * @Assert\NotBlank(message="le nombre ne doit pas etre vide !")
+     * @Assert\Range(
+     *      min=5,
+     *      notInRangeMessage="doit etre >5")
      */
     private $nbrp;
 
