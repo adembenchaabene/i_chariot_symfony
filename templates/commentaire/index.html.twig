@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-10 m-auto">
+            {{ form_start(form) }}
+            <div class="form-group">
+                <label>Comment</label>
+                {{ form_widget(form.contenuC , {'attr': {'class': 'form-control' , 'placeholder' : 'contenu'}} ) }}
+                {{ form_errors(form.contenuC,{'attr':{'class':'text-danger'}}) }}
+            </div>
+            {{ form_widget(form.Submit , {'attr': {'class': 'btn btn-info'}} ) }}
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -16,13 +16,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Twilio\Rest\Client;
 
-/**
- * @Route("/user")
- */
 class UserController extends AbstractController
 {
     /**
-     * @Route("/", name="app_user_index", methods={"GET"})
+     * @Route("/admin/users", name="app_user_index", methods={"GET"})
      */
     public function index(UserRepository $userRepository,Request $request): Response
     {
@@ -40,7 +37,7 @@ class UserController extends AbstractController
         ]);
     }
     /**
-     * @Route("/tri/user", name="app_user_tri", methods={"GET"})
+     * @Route("/admin/users/sorted", name="app_user_tri", methods={"GET"})
      */
     public function tri(UserRepository $userRepository,Request $request): Response
     {
@@ -61,7 +58,7 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/new", name="app_user_new", methods={"GET", "POST"})
+     * @Route("/admin/users/new", name="app_user_new", methods={"GET", "POST"})
      */
     public function new(Request $request, UserPasswordEncoderInterface $userPasswordEncoder,UserRepository $userRepository): Response
     {
@@ -88,7 +85,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_user_show", methods={"GET"})
+     * @Route("/admin/users/{id}", name="app_user_show", methods={"GET"})
      */
     public function show(User $user): Response
     {
@@ -98,7 +95,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="app_user_edit", methods={"GET", "POST"})
+     * @Route("admin/users/edit/{id}", name="app_user_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request,UserPasswordEncoderInterface $userPasswordEncoder, User $user, UserRepository $userRepository): Response
     {
@@ -123,7 +120,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_user_delete", methods={"POST"})
+     * @Route("admin/users/delete/{id}", name="app_user_delete", methods={"POST"})
      */
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {

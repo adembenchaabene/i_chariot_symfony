@@ -10,8 +10,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-
 use Captcha\Bundle\CaptchaBundle\Form\Type\CaptchaType;
+
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -22,9 +22,9 @@ class UserType extends AbstractType
             ->add('nom')
             ->add('prenom')
             
-            ->add('captchaCode', CaptchaType::class, array(
-                'captchaConfig' => 'ExampleCaptcha'
-            ))
+//            ->add('captchaCode', CaptchaType::class, array(
+//                'captchaConfig' => 'ExampleCaptcha'
+//            ))
             ->add('isExpired',CheckboxType::class, [
                 'label'    => "Bloquer",
                 'required' => false,

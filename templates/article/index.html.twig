@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ArticleController!{% endblock %}
+
+{% block body %}
+    {% for c in categories %}
+    <a href="{{ path('articledetail', {'id': c.idcateg}) }}">{{ c.nomcateg }}</a>
+    {% endfor %}
+{% endblock %}

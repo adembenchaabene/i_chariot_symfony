@@ -6,12 +6,11 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Captcha\Bundle\CaptchaBundle\Validator\Constraints as CaptchaAssert;
 use Symfony\Component\Validator\Constraints as Assert;
+use Captcha\Bundle\CaptchaBundle\Validator\Constraints as CaptchaAssert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- *
  */
 class User implements UserInterface
 {
@@ -87,6 +86,7 @@ class User implements UserInterface
     {
         $this->captchaCode = $captchaCode;
     }
+
     public function getId(): ?int
     {
         return $this->id;
